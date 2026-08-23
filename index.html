@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artistry by Haritha | Makeup & Beauty Studio</title>
+
+  <style>
+    :root {
+      --cream: #f7f0e8;
+      --taupe: #8f8174;
+      --taupe-dark: #6e6157;
+      --gold: #c9a46f;
+      --gold-soft: #dec19a;
+      --text: #342e2a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      overflow: hidden;
+      background: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+    }
+
+    button {
+      font: inherit;
+    }
+
+    /* =========================================================
+       MASTER SLIDER
+    ========================================================= */
+
+    .slider {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    .slides {
+      display: flex;
+      width: 400%;
+      height: 100%;
+      transition: transform .72s cubic-bezier(.77, 0, .18, 1);
+    }
+
+    .slide {
+      position: relative;
+      width: 25%;
+      height: 100%;
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: var(--cream);
+    }
+
+    /* =========================================================
+       ARTWORK CANVAS
+       All four approved images are used directly as the page.
+    ========================================================= */
+
+    .artwork-canvas {
+      position: relative;
+      width: min(100vw, calc(100vh * 1.5));
+      aspect-ratio: 3 / 2;
+      flex-shrink: 0;
+    }
+
+    .artwork-canvas > img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    /* =========================================================
+       INVISIBLE HOTSPOTS
+    ========================================================= */
+
+    .hotspot {
+      position: absolute;
+      z-index: 20;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hotspot:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    /* Soft gold hover used on the existing Services button and
+       now on EACH service/content item instead of whole panels. */
+    .soft-hover {
+      border-radius: 999px;
+      transition:
+        background .22s ease,
+        box-shadow .22s ease,
+        transform .22s ease,
+        border-color .22s ease;
+    }
+
+    .soft-hover:hover,
+    .soft-hover:focus-visible {
+      background: rgba(191, 154, 108, .12);
+      box-shadow:
+        0 0 20px rgba(191, 154, 108, .28),
+        inset 0 0 0 1px rgba(201, 164, 111, .30);
+      transform: translateY(-1px) scale(1.015);
+    }
+
+    /* Rounded rectangle hover for Book Look and top nav buttons. */
+    .button-hover {
+      border-radius: 10px;
+      transition:
+        background .22s ease,
+        box-shadow .22s ease,
+        transform .22s ease;
+    }
+
+    .button-hover:hover,
+    .button-hover:focus-visible {
+      background: rgba(191, 154, 108, .10);
+      box-shadow:
+        0 0 22px rgba(191, 154, 108, .26),
+        inset 0 0 0 1px rgba(201, 164, 111, .26);
+      transform: translateY(-1px);
+    }
+
+    .circle-hover {
+      border-radius: 50%;
+      transition:
+        background .22s ease,
+        box-shadow .22s ease,
+        transform .22s ease;
+    }
+
+    .circle-hover:hover,
+    .circle-hover:focus-visible {
+      background: rgba(255, 255, 255, .10);
+      box-shadow: 0 0 18px rgba(201, 164, 111, .30);
+      transform: scale(1.06);
+    }
+
+    /* =========================================================
+       COMMON HEADER HOTSPOTS
+    ========================================================= */
+
+    .nav-home     { left: 30.0%; top: 3.5%; width: 5.6%; height: 4.6%; }
+    .nav-about    { left: 38.1%; top: 3.5%; width: 6.1%; height: 4.6%; }
+    .nav-services { left: 46.0%; top: 3.5%; width: 7.0%; height: 4.6%; }
+    .nav-gallery  { left: 54.9%; top: 3.5%; width: 7.2%; height: 4.6%; }
+    .nav-contact  { left: 63.4%; top: 3.5%; width: 7.0%; height: 4.6%; }
+    .nav-book     { right: 4.0%; top: 2.2%; width: 11.5%; height: 5.2%; }
+
+    /* =========================================================
+       HOME PAGE HOTSPOTS
+    ========================================================= */
+
+    .home-arrow-left  { left: 1.4%; top: 36.0%; width: 4.0%; height: 5.4%; }
+    .home-arrow-right { right: 1.4%; top: 36.0%; width: 4.0%; height: 5.4%; }
+
+    .home-services {
+      left: 34.8%;
+      top: 39.6%;
+      width: 15.2%;
+      height: 5.5%;
+    }
+
+    /* Category title tabs — clickable, but no whole-panel hover. */
+    .home-bridal-title { left: 14.2%; top: 52.0%; width: 13.5%; height: 4.7%; }
+    .home-hair-title   { left: 38.8%; top: 52.0%; width: 11.0%; height: 4.7%; }
+    .home-nails-title  { left: 61.4%; top: 52.0%; width: 10.0%; height: 4.7%; }
+
+    /* Bridal Makeup individual chips */
+    .b-glossy { left: 10.7%; top: 57.7%; width: 9.5%; height: 4.1%; }
+    .b-natural { left: 20.8%; top: 57.7%; width: 10.0%; height: 4.1%; }
+    .b-hd { left: 10.8%; top: 63.0%; width: 9.4%; height: 4.1%; }
+    .b-party { left: 20.8%; top: 63.0%; width: 9.9%; height: 4.1%; }
+    .b-glam { left: 16.8%; top: 68.1%; width: 8.3%; height: 4.1%; }
+
+    /* Hair Styles individual chips */
+    .h-traditional { left: 37.4%; top: 57.8%; width: 13.7%; height: 4.0%; }
+    .h-messy { left: 35.0%; top: 63.0%; width: 7.9%; height: 4.1%; }
+    .h-curls { left: 43.1%; top: 63.0%; width: 5.5%; height: 4.1%; }
+    .h-bun { left: 48.7%; top: 63.0%; width: 4.7%; height: 4.1%; }
+
+    /* Nails individual chips */
+    .n-gel { left: 57.7%; top: 57.8%; width: 6.0%; height: 4.0%; }
+    .n-gelx { left: 64.0%; top: 57.8%; width: 5.9%; height: 4.0%; }
+    .n-fullset { left: 70.4%; top: 57.8%; width: 6.2%; height: 4.0%; }
+    .n-dip { left: 57.8%; top: 63.0%; width: 5.4%; height: 4.0%; }
+    .n-pedicure { left: 63.4%; top: 63.0%; width: 6.4%; height: 4.0%; }
+    .n-manicure { left: 70.2%; top: 63.0%; width: 6.4%; height: 4.0%; }
+
+    /* =========================================================
+       SUBPAGE HOTSPOTS
+       These sit exactly over controls printed in each approved image.
+    ========================================================= */
+
+    .sub-back { left: 14.6%; top: 14.6%; width: 8.2%; height: 4.5%; }
+    .sub-left { left: 2.5%; top: 38.3%; width: 4.2%; height: 5.8%; }
+    .sub-right { right: 2.3%; top: 38.3%; width: 4.2%; height: 5.8%; }
+
+    /* Bridal Book Look buttons */
+    .bridal-book-1 { left: 31.15%; top: 43.78%; width: 5.72%; height: 2.94%; }
+    .bridal-book-2 { left: 56.90%; top: 43.78%; width: 5.72%; height: 2.94%; }
+    .bridal-book-3 { left: 81.76%; top: 43.78%; width: 5.72%; height: 2.94%; }
+    .bridal-book-4 { left: 31.15%; top: 63.86%; width: 5.72%; height: 2.94%; }
+    .bridal-book-5 { left: 56.90%; top: 63.86%; width: 5.72%; height: 2.94%; }
+    .bridal-book-6 { left: 81.76%; top: 63.86%; width: 5.72%; height: 2.94%; }
+
+    /* Bridal buttons are pill-shaped in the artwork. Keep the hover
+       exactly on top of the printed pill instead of showing a larger
+       rounded rectangle around it. */
+    [class*="bridal-book-"] {
+      border-radius: 999px;
+    }
+
+    [class*="bridal-book-"]:hover,
+    [class*="bridal-book-"]:focus-visible {
+      background: rgba(191, 154, 108, .08);
+      box-shadow:
+        0 0 14px rgba(191, 154, 108, .22),
+        inset 0 0 0 1px rgba(201, 164, 111, .22);
+      transform: none;
+    }
+
+    /* Hair Book Look buttons */
+    .hair-book-1 { left: 24.1%; top: 68.2%; width: 6.1%; height: 3.2%; }
+    .hair-book-2 { left: 43.0%; top: 68.2%; width: 6.1%; height: 3.2%; }
+    .hair-book-3 { left: 61.7%; top: 68.2%; width: 6.1%; height: 3.2%; }
+    .hair-book-4 { left: 80.8%; top: 68.2%; width: 6.1%; height: 3.2%; }
+
+    /* Nails Book Look buttons */
+    .nails-book-1 { left: 31.2%; top: 43.9%; width: 5.7%; height: 3.0%; }
+    .nails-book-2 { left: 57.4%; top: 43.9%; width: 5.7%; height: 3.0%; }
+    .nails-book-3 { left: 82.2%; top: 43.9%; width: 5.7%; height: 3.0%; }
+    .nails-book-4 { left: 31.2%; top: 66.0%; width: 5.7%; height: 3.0%; }
+    .nails-book-5 { left: 57.4%; top: 66.0%; width: 5.7%; height: 3.0%; }
+    .nails-book-6 { left: 82.2%; top: 66.0%; width: 5.7%; height: 3.0%; }
+
+    /* Printed dots at bottom of each page. */
+    .dot-1 { left: 47.1%; top: 76.5%; width: 1.2%; height: 2.2%; }
+    .dot-2 { left: 48.8%; top: 76.5%; width: 1.2%; height: 2.2%; }
+    .dot-3 { left: 50.5%; top: 76.5%; width: 1.2%; height: 2.2%; }
+    .dot-4 { left: 52.2%; top: 76.5%; width: 1.2%; height: 2.2%; }
+
+    /* =========================================================
+       SERVICES POPUP
+    ========================================================= */
+
+    .services-popup {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      background: rgba(70, 59, 50, .48);
+      backdrop-filter: blur(8px);
+    }
+
+    .services-popup.active {
+      display: flex;
+    }
+
+    .popup-inner {
+      position: relative;
+      width: min(900px, 95vw);
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 40px;
+      border: 1px solid var(--gold);
+      border-radius: 18px;
+      background: linear-gradient(145deg, #fffaf5, #f2e8de);
+      box-shadow: 0 30px 70px rgba(72, 53, 38, .26);
+    }
+
+    .popup-inner h2 {
+      text-align: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      color: var(--taupe-dark);
+      font-size: 34px;
+      margin-bottom: 25px;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(143, 129, 116, .15);
+      color: var(--taupe-dark);
+      font-size: 27px;
+      cursor: pointer;
+    }
+
+    .popup-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .popup-category h4 {
+      padding-bottom: 7px;
+      margin-bottom: 7px;
+      color: var(--taupe-dark);
+      border-bottom: 1px solid rgba(201, 164, 111, .55);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 12px;
+    }
+
+    .popup-category ul {
+      list-style: none;
+    }
+
+    .popup-category li {
+      padding: 5px 7px;
+      color: #74685f;
+      font-size: 12px;
+      border-radius: 9px;
+      transition: background .18s ease, transform .18s ease;
+    }
+
+    .popup-category li:hover {
+      background: rgba(201, 164, 111, .14);
+      transform: translateX(2px);
+    }
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
+    .toast {
+      position: fixed;
+      z-index: 3000;
+      left: 50%;
+      bottom: 23px;
+      transform: translate(-50%, 15px);
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: var(--taupe-dark);
+      color: white;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 760px) {
+      .artwork-canvas {
+        width: 100vw;
+        aspect-ratio: 3 / 2;
+      }
+
+      .popup-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slider" id="slider">
+    <div class="slides" id="slides">
+
+      <!-- =====================================================
+           SLIDE 1 — HOME
+      ====================================================== -->
+      <section class="slide">
+        <div class="artwork-canvas">
+          <img src="artistry-design.png" alt="Artistry by Haritha home page" />
+
+          <!-- Header -->
+          <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
+          <button class="hotspot nav-about button-hover" onclick="showToast('About section selected')" aria-label="About"></button>
+          <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
+          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(1)" aria-label="Gallery"></button>
+          <button class="hotspot nav-contact button-hover" onclick="showToast('Contact details are shown below')" aria-label="Contact"></button>
+          <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
+
+          <!-- Side arrows -->
+          <button class="hotspot home-arrow-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
+          <button class="hotspot home-arrow-right circle-hover" onclick="nextSlide()" aria-label="Next slide"></button>
+
+          <!-- Main Services button -->
+          <button class="hotspot home-services button-hover open-services-popup" aria-label="Open Services"></button>
+
+          <!-- Category title tabs -->
+          <button class="hotspot home-bridal-title soft-hover" onclick="goToSlide(1)" aria-label="Bridal Makeup"></button>
+          <button class="hotspot home-hair-title soft-hover" onclick="goToSlide(2)" aria-label="Hair Styles"></button>
+          <button class="hotspot home-nails-title soft-hover" onclick="goToSlide(3)" aria-label="Nails"></button>
+
+          <!-- Bridal Makeup: EACH item has its own hover -->
+          <button class="hotspot soft-hover b-glossy" onclick="goToSlide(1)" aria-label="Glossy Makeup"></button>
+          <button class="hotspot soft-hover b-natural" onclick="goToSlide(1)" aria-label="No Makeup Look"></button>
+          <button class="hotspot soft-hover b-hd" onclick="goToSlide(1)" aria-label="HD Makeup"></button>
+          <button class="hotspot soft-hover b-party" onclick="goToSlide(1)" aria-label="Party Makeups"></button>
+          <button class="hotspot soft-hover b-glam" onclick="goToSlide(1)" aria-label="Glam Look"></button>
+
+          <!-- Hair Styles: EACH item has its own hover -->
+          <button class="hotspot soft-hover h-traditional" onclick="goToSlide(2)" aria-label="Traditional Bridal Braid"></button>
+          <button class="hotspot soft-hover h-messy" onclick="goToSlide(2)" aria-label="Messy Braid"></button>
+          <button class="hotspot soft-hover h-curls" onclick="goToSlide(2)" aria-label="Curls"></button>
+          <button class="hotspot soft-hover h-bun" onclick="goToSlide(2)" aria-label="Bun"></button>
+
+          <!-- Nails: EACH item has its own hover -->
+          <button class="hotspot soft-hover n-gel" onclick="goToSlide(3)" aria-label="Gel Nails"></button>
+          <button class="hotspot soft-hover n-gelx" onclick="goToSlide(3)" aria-label="Gel X"></button>
+          <button class="hotspot soft-hover n-fullset" onclick="goToSlide(3)" aria-label="Full Set"></button>
+          <button class="hotspot soft-hover n-dip" onclick="goToSlide(3)" aria-label="Dip"></button>
+          <button class="hotspot soft-hover n-pedicure" onclick="goToSlide(3)" aria-label="Pedicure"></button>
+          <button class="hotspot soft-hover n-manicure" onclick="goToSlide(3)" aria-label="Manicure"></button>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           SLIDE 2 — BRIDAL
+      ====================================================== -->
+      <section class="slide">
+        <div class="artwork-canvas">
+          <img src="bridal.png" alt="Bridal Makeup Artistry" />
+
+          <!-- Header -->
+          <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
+          <button class="hotspot nav-about button-hover" onclick="showToast('About section selected')" aria-label="About"></button>
+          <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
+          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(1)" aria-label="Gallery"></button>
+          <button class="hotspot nav-contact button-hover" onclick="showToast('Contact details are shown below')" aria-label="Contact"></button>
+          <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
+
+          <button class="hotspot sub-back button-hover" onclick="goToSlide(0)" aria-label="Back Home"></button>
+          <button class="hotspot sub-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
+          <button class="hotspot sub-right circle-hover" onclick="nextSlide()" aria-label="Next slide"></button>
+
+          <button class="hotspot bridal-book-1 button-hover" onclick="showToast('Soft Glam selected')" aria-label="Book Soft Glam"></button>
+          <button class="hotspot bridal-book-2 button-hover" onclick="showToast('Traditional Glam selected')" aria-label="Book Traditional Glam"></button>
+          <button class="hotspot bridal-book-3 button-hover" onclick="showToast('Bridal Transformation selected')" aria-label="Book Bridal Transformation"></button>
+          <button class="hotspot bridal-book-4 button-hover" onclick="showToast('Radiant Bride selected')" aria-label="Book Radiant Bride"></button>
+          <button class="hotspot bridal-book-5 button-hover" onclick="showToast('Golden Elegance selected')" aria-label="Book Golden Elegance"></button>
+          <button class="hotspot bridal-book-6 button-hover" onclick="showToast('Natural Glow selected')" aria-label="Book Natural Glow"></button>
+
+          <button class="hotspot dot-1 circle-hover" onclick="goToSlide(0)" aria-label="Home slide"></button>
+          <button class="hotspot dot-2 circle-hover" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
+          <button class="hotspot dot-3 circle-hover" onclick="goToSlide(2)" aria-label="Hair slide"></button>
+          <button class="hotspot dot-4 circle-hover" onclick="goToSlide(3)" aria-label="Nails slide"></button>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           SLIDE 3 — HAIR
+      ====================================================== -->
+      <section class="slide">
+        <div class="artwork-canvas">
+          <img src="hair.png" alt="Hair Styling Artistry" />
+
+          <!-- Header -->
+          <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
+          <button class="hotspot nav-about button-hover" onclick="showToast('About section selected')" aria-label="About"></button>
+          <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
+          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(2)" aria-label="Gallery"></button>
+          <button class="hotspot nav-contact button-hover" onclick="showToast('Contact details are shown below')" aria-label="Contact"></button>
+          <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
+
+          <button class="hotspot sub-back button-hover" onclick="goToSlide(0)" aria-label="Back Home"></button>
+          <button class="hotspot sub-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
+          <button class="hotspot sub-right circle-hover" onclick="nextSlide()" aria-label="Next slide"></button>
+
+          <button class="hotspot hair-book-1 button-hover" onclick="showToast('Traditional Bridal Braid selected')" aria-label="Book Traditional Bridal Braid"></button>
+          <button class="hotspot hair-book-2 button-hover" onclick="showToast('Traditional Floral Braid selected')" aria-label="Book Traditional Floral Braid"></button>
+          <button class="hotspot hair-book-3 button-hover" onclick="showToast('Romantic Open Curls selected')" aria-label="Book Romantic Open Curls"></button>
+          <button class="hotspot hair-book-4 button-hover" onclick="showToast('Elegant Messy Bun selected')" aria-label="Book Elegant Messy Bun"></button>
+
+          <button class="hotspot dot-1 circle-hover" onclick="goToSlide(0)" aria-label="Home slide"></button>
+          <button class="hotspot dot-2 circle-hover" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
+          <button class="hotspot dot-3 circle-hover" onclick="goToSlide(2)" aria-label="Hair slide"></button>
+          <button class="hotspot dot-4 circle-hover" onclick="goToSlide(3)" aria-label="Nails slide"></button>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           SLIDE 4 — NAILS
+      ====================================================== -->
+      <section class="slide">
+        <div class="artwork-canvas">
+          <img src="nails.png" alt="Nail Art and Care" />
+
+          <!-- Header -->
+          <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
+          <button class="hotspot nav-about button-hover" onclick="showToast('About section selected')" aria-label="About"></button>
+          <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
+          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(3)" aria-label="Gallery"></button>
+          <button class="hotspot nav-contact button-hover" onclick="showToast('Contact details are shown below')" aria-label="Contact"></button>
+          <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
+
+          <button class="hotspot sub-back button-hover" onclick="goToSlide(0)" aria-label="Back Home"></button>
+          <button class="hotspot sub-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
+          <button class="hotspot sub-right circle-hover" onclick="nextSlide()" aria-label="Next slide"></button>
+
+          <button class="hotspot nails-book-1 button-hover" onclick="showToast('Chic Monochrome Art selected')" aria-label="Book Chic Monochrome Art"></button>
+          <button class="hotspot nails-book-2 button-hover" onclick="showToast('Festive Crimson selected')" aria-label="Book Festive Crimson"></button>
+          <button class="hotspot nails-book-3 button-hover" onclick="showToast('Kids Nail Fun selected')" aria-label="Book Kids Nail Fun"></button>
+          <button class="hotspot nails-book-4 button-hover" onclick="showToast('Nail Party Experience selected')" aria-label="Book Nail Party Experience"></button>
+          <button class="hotspot nails-book-5 button-hover" onclick="showToast('Precision Nail Care selected')" aria-label="Book Precision Nail Care"></button>
+          <button class="hotspot nails-book-6 button-hover" onclick="showToast('Group Pampering selected')" aria-label="Book Group Pampering"></button>
+
+          <button class="hotspot dot-1 circle-hover" onclick="goToSlide(0)" aria-label="Home slide"></button>
+          <button class="hotspot dot-2 circle-hover" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
+          <button class="hotspot dot-3 circle-hover" onclick="goToSlide(2)" aria-label="Hair slide"></button>
+          <button class="hotspot dot-4 circle-hover" onclick="goToSlide(3)" aria-label="Nails slide"></button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SERVICES POPUP
+  ========================================================== -->
+  <div class="services-popup" id="servicesPopup">
+    <div class="popup-inner">
+      <button class="popup-close" id="popupClose" aria-label="Close">×</button>
+      <h2>Beauty Care &amp; Services</h2>
+
+      <div class="popup-grid">
+        <div class="popup-category">
+          <h4>Threading</h4>
+          <ul>
+            <li>Eyebrow</li>
+            <li>Upper Lip</li>
+            <li>Chin</li>
+            <li>Neck</li>
+            <li>Forehead</li>
+            <li>Sides</li>
+            <li>Full Face</li>
+          </ul>
+        </div>
+
+        <div class="popup-category">
+          <h4>Waxing</h4>
+          <ul>
+            <li>Eyebrow / Upper Lip / Chin</li>
+            <li>Neck / Forehead / Sides</li>
+            <li>Full Face</li>
+            <li>Stomach &amp; Back</li>
+            <li>Armpit &amp; Full Arm</li>
+            <li>Half &amp; Full Legs</li>
+            <li>Bikini &amp; Brazilian</li>
+          </ul>
+        </div>
+
+        <div class="popup-category">
+          <h4>Facials</h4>
+          <ul>
+            <li>Express Facial</li>
+            <li>Herbal Facial</li>
+            <li>Gold / Pearl / Diamond Facial</li>
+            <li>Anti Aging Facial</li>
+            <li>Dermaplane Facial</li>
+            <li>O3 Vitamin / Bridal Facial</li>
+          </ul>
+        </div>
+
+        <div class="popup-category">
+          <h4>Nails</h4>
+          <ul>
+            <li>Basic &amp; Gel Manicure</li>
+            <li>Pedicure &amp; Gel Pedicure</li>
+            <li>Gel X</li>
+            <li>Gel &amp; Acrylic Removal</li>
+            <li>Nail Art</li>
+          </ul>
+        </div>
+
+        <div class="popup-category">
+          <h4>Hair Care</h4>
+          <ul>
+            <li>Henna Application</li>
+            <li>Hair Color</li>
+            <li>Hair Cut</li>
+            <li>Layer / Step / Feather</li>
+            <li>Head Massage</li>
+          </ul>
+        </div>
+
+        <div class="popup-category">
+          <h4>Lashes &amp; Draping</h4>
+          <ul>
+            <li>Lash Lifting &amp; Tinting</li>
+            <li>Eyebrow Tinting</li>
+            <li>Brow Lamination &amp; Tinting</li>
+            <li>Saree Draping</li>
+            <li>Saree Preplating</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Booking request selected.</div>
+
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 4;
+    const slides = document.getElementById('slides');
+    const servicesPopup = document.getElementById('servicesPopup');
+    const popupClose = document.getElementById('popupClose');
+    const toast = document.getElementById('toast');
+    let toastTimer;
+
+    function goToSlide(index) {
+      if (index < 0) index = totalSlides - 1;
+      if (index >= totalSlides) index = 0;
+
+      currentSlide = index;
+      slides.style.transform = `translateX(-${currentSlide * 25}%)`;
+    }
+
+    function previousSlide() {
+      goToSlide(currentSlide - 1);
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+    }
+
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add('show');
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    document.querySelectorAll('.open-services-popup').forEach((button) => {
+      button.addEventListener('click', () => {
+        servicesPopup.classList.add('active');
+      });
+    });
+
+    popupClose.addEventListener('click', () => {
+      servicesPopup.classList.remove('active');
+    });
+
+    servicesPopup.addEventListener('click', (event) => {
+      if (event.target === servicesPopup) {
+        servicesPopup.classList.remove('active');
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        servicesPopup.classList.remove('active');
+        return;
+      }
+
+      if (servicesPopup.classList.contains('active')) return;
+
+      if (event.key === 'ArrowLeft') previousSlide();
+      if (event.key === 'ArrowRight') nextSlide();
+    });
+
+    goToSlide(0);
+  </script>
+</body>
+</html>
