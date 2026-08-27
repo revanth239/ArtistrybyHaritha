@@ -52,14 +52,14 @@
 
     .slides {
       display: flex;
-      width: 400%;
+      width: 500%;
       height: 100%;
       transition: transform .72s cubic-bezier(.77, 0, .18, 1);
     }
 
     .slide {
       position: relative;
-      width: 25%;
+      width: 20%;
       height: 100%;
       flex-shrink: 0;
       overflow: hidden;
@@ -143,11 +143,12 @@
 
     .button-hover:hover,
     .button-hover:focus-visible {
-      background: rgba(191, 154, 108, .10);
+      background: linear-gradient(135deg, rgba(225, 190, 133, .72), rgba(157, 113, 70, .64));
       box-shadow:
-        0 0 22px rgba(191, 154, 108, .26),
-        inset 0 0 0 1px rgba(201, 164, 111, .26);
-      transform: translateY(-1px);
+        0 5px 18px rgba(94, 61, 31, .34),
+        0 0 0 2px rgba(255, 231, 188, .85),
+        inset 0 0 0 1px rgba(112, 71, 35, .45);
+      transform: translateY(-2px) scale(1.045);
     }
 
     .circle-hover {
@@ -165,14 +166,134 @@
       transform: scale(1.06);
     }
 
+    /* These layers sit over the navigation and footer printed inside the
+       approved artwork. The artwork itself is never edited. */
+    .site-header-overlay {
+      position: absolute;
+      z-index: 15;
+      left: 25.5%;
+      right: 0;
+      top: 0;
+      height: 9.8%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(14px, 2.8vw, 48px);
+      padding: 0 2.2% 0 3%;
+      background: linear-gradient(90deg, rgba(73, 59, 48, .95), rgba(77, 63, 52, .95));
+    }
+
+    .site-header-overlay a,
+    .footer-links a,
+    .social-links a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-header-overlay a {
+      color: #fffaf5;
+      font-size: clamp(10px, 1.08vw, 17px);
+      letter-spacing: .02em;
+      padding: 8px 11px;
+      border-radius: 9px;
+      white-space: nowrap;
+    }
+
+    .site-header-overlay .book-now {
+      border: 1px solid var(--gold-soft);
+      padding: 9px 18px;
+    }
+
+    .site-footer-overlay {
+      position: absolute;
+      z-index: 15;
+      inset: auto 0 0;
+      height: 23.1%;
+      padding: 1.1% 7.8% .8%;
+      background: rgba(255, 250, 246, .97);
+      border-top: 1px solid rgba(180, 136, 90, .36);
+      display: grid;
+      grid-template-columns: 1.25fr 1fr 1.35fr;
+      column-gap: 10%;
+      align-content: start;
+    }
+
+    .footer-column h3 {
+      margin: 0 0 8px;
+      font-size: clamp(10px, .95vw, 15px);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .footer-column p,
+    .footer-column a {
+      font-size: clamp(9px, .86vw, 14px);
+      line-height: 1.45;
+    }
+
+    .footer-links,
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    .footer-links a:hover,
+    .social-links a:hover {
+      color: #8c5a2b;
+      text-decoration: underline;
+    }
+
+    .social-links { gap: 6px; }
+    .social-links a { font-weight: 600; }
+    .contact-detail { display: block; margin-bottom: 5px; }
+
+    .footer-copyright {
+      grid-column: 1 / -1;
+      align-self: end;
+      justify-self: center;
+      margin-top: 7px;
+      padding-top: 5px;
+      width: 100%;
+      border-top: 1px solid rgba(201, 164, 111, .35);
+      text-align: center;
+      color: #6e6157;
+      font-size: clamp(8px, .78vw, 12px);
+    }
+
+    /* Keep the original artwork and cover only its printed footer. */
+    .site-header-overlay,
+    .site-footer-overlay { display: none; }
+    .footer-column:nth-child(2) { justify-self: center; }
+    .footer-column:nth-child(3) { justify-self: end; }
+    .footer-column:nth-child(3) .contact-detail { white-space: nowrap; }
+
+    .gallery-canvas { background: #fbf2ea; padding: 7.3% 11% 22%; }
+    .gallery-canvas::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 7% 38%,rgba(244,210,174,.52),transparent 18%),radial-gradient(circle at 90% 50%,rgba(250,226,208,.68),transparent 24%); pointer-events:none; }
+    .gallery-content { position:relative; z-index:1; height:100%; padding:2.5% 3.5%; border:1px solid #e4b87d; border-radius:17px; background:rgba(255,252,248,.58); box-shadow:0 8px 18px rgba(102,72,48,.08); }
+    .gallery-title { font:italic 3vw Georgia,serif; text-align:center; margin:0 0 .6%; }
+    .gallery-subtitle { text-align:center; margin:0 0 2%; font-size:1.05vw; color:#65584e; }
+    .gallery-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5%; }
+    .gallery-card { margin:0; padding:5%; border:1px solid #ecc790; border-radius:12px; background:#fffaf6; box-shadow:0 4px 10px rgba(83,59,42,.1); overflow:hidden; transition:.25s ease; }
+    .gallery-card img { width:100%; height:11.6vw; display:block; object-fit:cover; border-radius:8px; }
+    .gallery-card figcaption { padding-top:6%; font:italic 1.05vw Georgia,serif; text-align:center; }
+    .gallery-card:hover { transform:translateY(-5px) scale(1.015); box-shadow:0 12px 22px rgba(137,92,47,.22),0 0 0 2px rgba(225,174,96,.35); }
+    .gallery-header { position:absolute; z-index:2; top:0; left:0; width:100%; height:9.8%; display:flex; align-items:center; padding:0 4.5%; color:#fff; background:linear-gradient(100deg,#5b4b3f,#786656,#51453b); }
+    .gallery-brand { display:flex; align-items:center; gap:1.1vw; font:1.45vw Georgia,serif; }
+    .gallery-brand img { width:5vw; height:5vw; object-fit:cover; border-radius:50%; }
+    .gallery-nav { display:flex; gap:4.7vw; margin-left:auto; align-items:center; font-size:1.15vw; }
+    .gallery-nav button, .gallery-nav a { color:#fff; font:inherit; text-decoration:none; background:transparent; border:0; cursor:pointer; }
+    .gallery-nav .book-gallery { border:1px solid #d4b181; border-radius:7px; padding:.65vw 1.3vw; }
+
     /* =========================================================
        COMMON HEADER HOTSPOTS
     ========================================================= */
 
-    .nav-home     { left: 30.0%; top: 3.5%; width: 5.6%; height: 4.6%; }
+    .nav-home     { left: 37.6%; top: 3.5%; width: 5.6%; height: 4.6%; }
     .nav-about    { left: 38.1%; top: 3.5%; width: 6.1%; height: 4.6%; }
     .nav-services { left: 46.0%; top: 3.5%; width: 7.0%; height: 4.6%; }
-    .nav-gallery  { left: 54.9%; top: 3.5%; width: 7.2%; height: 4.6%; }
+    .nav-gallery  { left: 55.0%; top: 3.5%; width: 7.2%; height: 4.6%; }
     .nav-contact  { left: 63.4%; top: 3.5%; width: 7.0%; height: 4.6%; }
     .nav-book     { right: 4.0%; top: 2.2%; width: 11.5%; height: 5.2%; }
 
@@ -262,6 +383,16 @@
     .nails-book-4 { left: 31.2%; top: 66.0%; width: 5.7%; height: 3.0%; }
     .nails-book-5 { left: 57.4%; top: 66.0%; width: 5.7%; height: 3.0%; }
     .nails-book-6 { left: 82.2%; top: 66.0%; width: 5.7%; height: 3.0%; }
+
+    /* Social links printed inside the revised slide images. */
+    .footer-whatsapp { left: 48.3%; top: 82.7%; width: 9.8%; height: 2.2%; }
+    .footer-instagram { left: 48.3%; top: 86.5%; width: 8.2%; height: 2.2%; }
+    .footer-facebook { left: 48.3%; top: 90.1%; width: 8.2%; height: 2.2%; }
+
+    /* The Home artwork has a taller footer than the service artworks. */
+    .home-artwork .footer-whatsapp { top: 84.85%; }
+    .home-artwork .footer-instagram { top: 88.65%; }
+    .home-artwork .footer-facebook { top: 92.25%; }
 
     /* Printed dots at bottom of each page. */
     .dot-1 { left: 47.1%; top: 76.5%; width: 1.2%; height: 2.2%; }
@@ -407,15 +538,20 @@
            SLIDE 1 — HOME
       ====================================================== -->
       <section class="slide">
-        <div class="artwork-canvas">
+        <div class="artwork-canvas home-artwork">
           <img src="artistry-design.png" alt="Artistry by Haritha home page" />
+
+          <footer class="site-footer-overlay">
+            <section class="footer-column"><h3>About Us</h3><p>Artistry by Haritha is a premier<br>makeup and beauty studio<br>specializing in bridal makeup,<br>hairstyles, and nail services<br>for every special occasion.</p></section>
+            <section class="footer-column"><h3>Follow Us</h3><div class="social-links"><a href="https://wa.me/16147078179" target="_blank">◉ &nbsp;614 707 8179</a><a href="https://www.instagram.com/haritha_makeup_hairstyle" target="_blank">◎ &nbsp;Instagram</a><a href="https://www.facebook.com/search/top?q=haritha%20reddy" target="_blank">● &nbsp;Facebook</a></div></section>
+            <section class="footer-column"><h3>Contact Us</h3><a class="contact-detail" href="tel:+16147078179">☎ &nbsp; 614 707 8179</a><a class="contact-detail" href="mailto:Beautycare.ohio@gmail.com">✉ &nbsp; Beautycare.ohio@gmail.com</a><span class="contact-detail">● &nbsp; Dublin, Ohio, 43016</span></section>
+            <div class="footer-copyright">© 2025 Artistry by Haritha. All rights reserved.</div>
+          </footer>
 
           <!-- Header -->
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
-          <button class="hotspot nav-about button-hover" onclick="showToast('About section selected')" aria-label="About"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
-          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(1)" aria-label="Gallery"></button>
-          <button class="hotspot nav-contact button-hover" onclick="showToast('Contact details are shown below')" aria-label="Contact"></button>
+          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(4)" aria-label="Gallery"></button>
           <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
 
           <!-- Side arrows -->
@@ -459,13 +595,17 @@
       <section class="slide">
         <div class="artwork-canvas">
           <img src="bridal.png" alt="Bridal Makeup Artistry" />
+          <footer class="site-footer-overlay">
+            <section class="footer-column"><h3>About Us</h3><p>Artistry by Haritha is a premier<br>makeup and beauty studio<br>specializing in bridal makeup,<br>hairstyles, and nail services<br>for every special occasion.</p></section>
+            <section class="footer-column"><h3>Follow Us</h3><div class="social-links"><a href="https://wa.me/16147078179" target="_blank">◉ &nbsp;614 707 8179</a><a href="https://www.instagram.com/haritha_makeup_hairstyle" target="_blank">◎ &nbsp;Instagram</a><a href="https://www.facebook.com/search/top?q=haritha%20reddy" target="_blank">● &nbsp;Facebook</a></div></section>
+            <section class="footer-column"><h3>Contact Us</h3><a class="contact-detail" href="tel:+16147078179">☎ &nbsp; 614 707 8179</a><a class="contact-detail" href="mailto:Beautycare.ohio@gmail.com">✉ &nbsp; Beautycare.ohio@gmail.com</a><span class="contact-detail">● &nbsp; Dublin, Ohio, 43016</span></section>
+            <div class="footer-copyright">© 2025 Artistry by Haritha. All rights reserved.</div>
+          </footer>
 
           <!-- Header -->
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
-          <button class="hotspot nav-about button-hover" onclick="showToast('About section selected')" aria-label="About"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
-          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(1)" aria-label="Gallery"></button>
-          <button class="hotspot nav-contact button-hover" onclick="showToast('Contact details are shown below')" aria-label="Contact"></button>
+          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(4)" aria-label="Gallery"></button>
           <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
 
           <button class="hotspot sub-back button-hover" onclick="goToSlide(0)" aria-label="Back Home"></button>
@@ -492,13 +632,17 @@
       <section class="slide">
         <div class="artwork-canvas">
           <img src="hair.png" alt="Hair Styling Artistry" />
+          <footer class="site-footer-overlay">
+            <section class="footer-column"><h3>About Us</h3><p>Artistry by Haritha is a premier<br>makeup and beauty studio<br>specializing in bridal makeup,<br>hairstyles, and nail services<br>for every special occasion.</p></section>
+            <section class="footer-column"><h3>Follow Us</h3><div class="social-links"><a href="https://wa.me/16147078179" target="_blank">◉ &nbsp;614 707 8179</a><a href="https://www.instagram.com/haritha_makeup_hairstyle" target="_blank">◎ &nbsp;Instagram</a><a href="https://www.facebook.com/search/top?q=haritha%20reddy" target="_blank">● &nbsp;Facebook</a></div></section>
+            <section class="footer-column"><h3>Contact Us</h3><a class="contact-detail" href="tel:+16147078179">☎ &nbsp; 614 707 8179</a><a class="contact-detail" href="mailto:Beautycare.ohio@gmail.com">✉ &nbsp; Beautycare.ohio@gmail.com</a><span class="contact-detail">● &nbsp; Dublin, Ohio, 43016</span></section>
+            <div class="footer-copyright">© 2025 Artistry by Haritha. All rights reserved.</div>
+          </footer>
 
           <!-- Header -->
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
-          <button class="hotspot nav-about button-hover" onclick="showToast('About section selected')" aria-label="About"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
-          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(2)" aria-label="Gallery"></button>
-          <button class="hotspot nav-contact button-hover" onclick="showToast('Contact details are shown below')" aria-label="Contact"></button>
+          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(4)" aria-label="Gallery"></button>
           <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
 
           <button class="hotspot sub-back button-hover" onclick="goToSlide(0)" aria-label="Back Home"></button>
@@ -523,13 +667,17 @@
       <section class="slide">
         <div class="artwork-canvas">
           <img src="nails.png" alt="Nail Art and Care" />
+          <footer class="site-footer-overlay">
+            <section class="footer-column"><h3>About Us</h3><p>Artistry by Haritha is a premier<br>makeup and beauty studio<br>specializing in bridal makeup,<br>hairstyles, and nail services<br>for every special occasion.</p></section>
+            <section class="footer-column"><h3>Follow Us</h3><div class="social-links"><a href="https://wa.me/16147078179" target="_blank">◉ &nbsp;614 707 8179</a><a href="https://www.instagram.com/haritha_makeup_hairstyle" target="_blank">◎ &nbsp;Instagram</a><a href="https://www.facebook.com/search/top?q=haritha%20reddy" target="_blank">● &nbsp;Facebook</a></div></section>
+            <section class="footer-column"><h3>Contact Us</h3><a class="contact-detail" href="tel:+16147078179">☎ &nbsp; 614 707 8179</a><a class="contact-detail" href="mailto:Beautycare.ohio@gmail.com">✉ &nbsp; Beautycare.ohio@gmail.com</a><span class="contact-detail">● &nbsp; Dublin, Ohio, 43016</span></section>
+            <div class="footer-copyright">© 2025 Artistry by Haritha. All rights reserved.</div>
+          </footer>
 
           <!-- Header -->
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
-          <button class="hotspot nav-about button-hover" onclick="showToast('About section selected')" aria-label="About"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
-          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(3)" aria-label="Gallery"></button>
-          <button class="hotspot nav-contact button-hover" onclick="showToast('Contact details are shown below')" aria-label="Contact"></button>
+          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(4)" aria-label="Gallery"></button>
           <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
 
           <button class="hotspot sub-back button-hover" onclick="goToSlide(0)" aria-label="Back Home"></button>
@@ -547,6 +695,21 @@
           <button class="hotspot dot-2 circle-hover" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
           <button class="hotspot dot-3 circle-hover" onclick="goToSlide(2)" aria-label="Hair slide"></button>
           <button class="hotspot dot-4 circle-hover" onclick="goToSlide(3)" aria-label="Nails slide"></button>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           SLIDE 5 — GALLERY
+      ====================================================== -->
+      <section class="slide">
+        <div class="artwork-canvas">
+          <img src="gallery.png" alt="Artistry by Haritha gallery" />
+          <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
+          <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
+          <button class="hotspot nav-gallery button-hover" aria-label="Gallery"></button>
+          <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
+          <button class="hotspot sub-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
+          <button class="hotspot sub-right circle-hover" onclick="nextSlide()" aria-label="Next slide"></button>
         </div>
       </section>
 
@@ -640,19 +803,28 @@
 
   <script>
     let currentSlide = 0;
-    const totalSlides = 4;
+    const totalSlides = 5;
     const slides = document.getElementById('slides');
     const servicesPopup = document.getElementById('servicesPopup');
     const popupClose = document.getElementById('popupClose');
     const toast = document.getElementById('toast');
     let toastTimer;
 
+    /* The Follow Us labels are printed inside each image. These precise
+       hotspots restore both the hover effect and the actual social links. */
+    document.querySelectorAll('.artwork-canvas').forEach((canvas) => {
+      canvas.insertAdjacentHTML('beforeend', `
+        <a class="hotspot soft-hover footer-whatsapp" href="https://wa.me/16147078179" target="_blank" rel="noopener" aria-label="WhatsApp 614 707 8179"></a>
+        <a class="hotspot soft-hover footer-instagram" href="https://www.instagram.com/haritha_makeup_hairstyle" target="_blank" rel="noopener" aria-label="Instagram"></a>
+        <a class="hotspot soft-hover footer-facebook" href="https://www.facebook.com/search/top?q=haritha%20reddy" target="_blank" rel="noopener" aria-label="Facebook"></a>`);
+    });
+
     function goToSlide(index) {
       if (index < 0) index = totalSlides - 1;
       if (index >= totalSlides) index = 0;
 
       currentSlide = index;
-      slides.style.transform = `translateX(-${currentSlide * 25}%)`;
+      slides.style.transform = `translateX(-${currentSlide * 20}%)`;
     }
 
     function previousSlide() {
