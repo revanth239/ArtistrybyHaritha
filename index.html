@@ -342,7 +342,10 @@
        These sit exactly over controls printed in each approved image.
     ========================================================= */
 
-    .sub-back { left: 14.6%; top: 14.6%; width: 8.2%; height: 4.5%; }
+    /* Exact dimensions of the printed ← Home pill on Bridal, Nails and Gallery. */
+    .sub-back { left: 15.45%; top: 13.8%; width: 7.3%; height: 4.15%; }
+    .bridal-artwork .sub-back { top: 15.8%; }
+    .hair-artwork .sub-back { top: 14.8%; }
     .sub-left { left: 2.5%; top: 38.3%; width: 4.2%; height: 5.8%; }
     .sub-right { right: 2.3%; top: 38.3%; width: 4.2%; height: 5.8%; }
 
@@ -593,7 +596,7 @@
            SLIDE 2 — BRIDAL
       ====================================================== -->
       <section class="slide">
-        <div class="artwork-canvas">
+        <div class="artwork-canvas bridal-artwork">
           <img src="bridal.png" alt="Bridal Makeup Artistry" />
           <footer class="site-footer-overlay">
             <section class="footer-column"><h3>About Us</h3><p>Artistry by Haritha is a premier<br>makeup and beauty studio<br>specializing in bridal makeup,<br>hairstyles, and nail services<br>for every special occasion.</p></section>
@@ -630,7 +633,7 @@
            SLIDE 3 — HAIR
       ====================================================== -->
       <section class="slide">
-        <div class="artwork-canvas">
+        <div class="artwork-canvas hair-artwork">
           <img src="hair.png" alt="Hair Styling Artistry" />
           <footer class="site-footer-overlay">
             <section class="footer-column"><h3>About Us</h3><p>Artistry by Haritha is a premier<br>makeup and beauty studio<br>specializing in bridal makeup,<br>hairstyles, and nail services<br>for every special occasion.</p></section>
@@ -665,7 +668,7 @@
            SLIDE 4 — NAILS
       ====================================================== -->
       <section class="slide">
-        <div class="artwork-canvas">
+        <div class="artwork-canvas nails-artwork">
           <img src="nails.png" alt="Nail Art and Care" />
           <footer class="site-footer-overlay">
             <section class="footer-column"><h3>About Us</h3><p>Artistry by Haritha is a premier<br>makeup and beauty studio<br>specializing in bridal makeup,<br>hairstyles, and nail services<br>for every special occasion.</p></section>
@@ -702,7 +705,7 @@
            SLIDE 5 — GALLERY
       ====================================================== -->
       <section class="slide">
-        <div class="artwork-canvas">
+        <div class="artwork-canvas gallery-artwork">
           <img src="gallery.png" alt="Artistry by Haritha gallery" />
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
@@ -826,6 +829,7 @@
       currentSlide = index;
       slides.style.transform = `translateX(-${currentSlide * 20}%)`;
     }
+
 
     function previousSlide() {
       goToSlide(currentSlide - 1);
