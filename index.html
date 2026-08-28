@@ -100,6 +100,7 @@
     .mobile-hotspot,
     .mobile-whatsapp-call,
     .mobile-whatsapp-slide,
+    .mobile-instagram-slide,
     .mobile-menu {
       display: none;
     }
@@ -721,7 +722,25 @@
         touch-action: manipulation;
       }
 
-      .mobile-whatsapp-slide svg {
+      .mobile-instagram-slide {
+        position: absolute;
+        z-index: 30;
+        top: 10.45%;
+        right: 16.3%;
+        width: 8.5%;
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 0;
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+
+      .mobile-whatsapp-slide svg,
+      .mobile-instagram-slide svg {
         width: 100%;
         height: auto;
         display: block;
@@ -729,7 +748,8 @@
       }
 
       .mobile-whatsapp-call:active,
-      .mobile-whatsapp-slide:active {
+      .mobile-whatsapp-slide:active,
+      .mobile-instagram-slide:active {
         transform: scale(.97);
       }
 
@@ -857,7 +877,7 @@
       <section class="slide">
         <div class="artwork-canvas bridal-artwork">
           <img class="desktop-art" src="bridal.png" alt="Bridal Makeup Artistry" />
-          <img class="mobile-art" src="mobile-bridal.png" alt="Bridal Makeup Artistry mobile page" />
+          <img class="mobile-art" src="mobile-bridal.png?v=2" alt="Bridal Makeup Artistry mobile page" />
           <footer class="site-footer-overlay">
             <section class="footer-column"><h3>About Us</h3><p>Artistry by Haritha is a premier<br>makeup and beauty studio<br>specializing in bridal makeup,<br>hairstyles, and nail services<br>for every special occasion.</p></section>
             <section class="footer-column"><h3>Follow Us</h3><div class="social-links"><a href="https://wa.me/16147078179" target="_blank">◉ &nbsp;614 707 8179</a><a href="https://www.instagram.com/haritha_makeup_hairstyle" target="_blank">◎ &nbsp;Instagram</a><a href="https://www.facebook.com/search/top?q=haritha%20reddy" target="_blank">● &nbsp;Facebook</a></div></section>
@@ -890,17 +910,17 @@
           <!-- Mobile Bridal controls -->
           <button class="hotspot mobile-hotspot" style="left:87.3%;top:2.2%;width:10%;height:4.8%" onclick="openMobileMenu()" aria-label="Open menu"></button>
           <button class="hotspot mobile-hotspot button-hover" style="left:6.3%;top:10.9%;width:17.8%;height:3.1%" onclick="goToSlide(0)" aria-label="Back Home"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:36.4%;width:17.6%;height:3%" onclick="showToast('Soft Glam selected')" aria-label="Book Soft Glam"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:36.4%;width:17.6%;height:3%" onclick="showToast('Traditional Glam selected')" aria-label="Book Traditional Glam"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:57.3%;width:17.6%;height:3%" onclick="showToast('Bridal Transformation selected')" aria-label="Book Bridal Transformation"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:57.3%;width:17.6%;height:3%" onclick="showToast('Radiant Bride selected')" aria-label="Book Radiant Bride"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:78.2%;width:17.6%;height:3%" onclick="showToast('Golden Elegance selected')" aria-label="Book Golden Elegance"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:78.2%;width:17.6%;height:3%" onclick="showToast('Natural Glow selected')" aria-label="Book Natural Glow"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:48.4%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(0)" aria-label="Home slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:55.2%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:61.9%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(2)" aria-label="Hair slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:68.7%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(3)" aria-label="Nails slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:75.4%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(4)" aria-label="Gallery slide"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:18.4%;top:42.9%;width:18.5%;height:3.1%" onclick="showToast('Soft Glam selected')" aria-label="Book Soft Glam"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:65.1%;top:42.9%;width:18.5%;height:3.1%" onclick="showToast('Traditional Glam selected')" aria-label="Book Traditional Glam"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:18.4%;top:63.8%;width:18.5%;height:3.1%" onclick="showToast('Bridal Transformation selected')" aria-label="Book Bridal Transformation"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:65.1%;top:63.8%;width:18.5%;height:3.1%" onclick="showToast('Radiant Bride selected')" aria-label="Book Radiant Bride"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:18.4%;top:84%;width:18.5%;height:3.1%" onclick="showToast('Golden Elegance selected')" aria-label="Book Golden Elegance"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:65.1%;top:84%;width:18.5%;height:3.1%" onclick="showToast('Natural Glow selected')" aria-label="Book Natural Glow"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:35.5%;top:89.8%;width:3.2%;height:2%" onclick="goToSlide(0)" aria-label="Home slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:42.3%;top:89.8%;width:3.2%;height:2%" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:49.1%;top:89.8%;width:3.2%;height:2%" onclick="goToSlide(2)" aria-label="Hair slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:55.9%;top:89.8%;width:3.2%;height:2%" onclick="goToSlide(3)" aria-label="Nails slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:62.7%;top:89.8%;width:3.2%;height:2%" onclick="goToSlide(4)" aria-label="Gallery slide"></button>
         </div>
       </section>
 
@@ -959,7 +979,7 @@
       <section class="slide">
         <div class="artwork-canvas nails-artwork">
           <img class="desktop-art" src="nails.png" alt="Nail Art and Care" />
-          <img class="mobile-art" src="mobile-nails.png" alt="Nail Art and Care mobile page" />
+          <img class="mobile-art" src="mobile-nails.png?v=2" alt="Nail Art and Care mobile page" />
           <footer class="site-footer-overlay">
             <section class="footer-column"><h3>About Us</h3><p>Artistry by Haritha is a premier<br>makeup and beauty studio<br>specializing in bridal makeup,<br>hairstyles, and nail services<br>for every special occasion.</p></section>
             <section class="footer-column"><h3>Follow Us</h3><div class="social-links"><a href="https://wa.me/16147078179" target="_blank">◉ &nbsp;614 707 8179</a><a href="https://www.instagram.com/haritha_makeup_hairstyle" target="_blank">◎ &nbsp;Instagram</a><a href="https://www.facebook.com/search/top?q=haritha%20reddy" target="_blank">● &nbsp;Facebook</a></div></section>
@@ -992,17 +1012,17 @@
           <!-- Mobile Nails controls -->
           <button class="hotspot mobile-hotspot" style="left:87.3%;top:2.2%;width:10%;height:4.8%" onclick="openMobileMenu()" aria-label="Open menu"></button>
           <button class="hotspot mobile-hotspot button-hover" style="left:6.3%;top:10.9%;width:17.8%;height:3.1%" onclick="goToSlide(0)" aria-label="Back Home"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:36.4%;width:17.6%;height:3%" onclick="showToast('Chic Monochrome Art selected')" aria-label="Book Chic Monochrome Art"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:36.4%;width:17.6%;height:3%" onclick="showToast('Festive Crimson selected')" aria-label="Book Festive Crimson"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:57.3%;width:17.6%;height:3%" onclick="showToast('Kids Nail Fun selected')" aria-label="Book Kids Nail Fun"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:57.3%;width:17.6%;height:3%" onclick="showToast('Nail Party Experience selected')" aria-label="Book Nail Party Experience"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:78.2%;width:17.6%;height:3%" onclick="showToast('Precision Nail Care selected')" aria-label="Book Precision Nail Care"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:78.2%;width:17.6%;height:3%" onclick="showToast('Group Pampering selected')" aria-label="Book Group Pampering"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:48.4%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(0)" aria-label="Home slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:55.2%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:61.9%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(2)" aria-label="Hair slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:68.7%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(3)" aria-label="Nails slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:75.4%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(4)" aria-label="Gallery slide"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:40.2%;width:17.6%;height:3.1%" onclick="showToast('Chic Monochrome Art selected')" aria-label="Book Chic Monochrome Art"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:40.2%;width:17.6%;height:3.1%" onclick="showToast('Festive Crimson selected')" aria-label="Book Festive Crimson"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:61.2%;width:17.6%;height:3.1%" onclick="showToast('Kids Nail Fun selected')" aria-label="Book Kids Nail Fun"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:61.2%;width:17.6%;height:3.1%" onclick="showToast('Nail Party Experience selected')" aria-label="Book Nail Party Experience"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:82.6%;width:17.6%;height:3.1%" onclick="showToast('Precision Nail Care selected')" aria-label="Book Precision Nail Care"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:82.6%;width:17.6%;height:3.1%" onclick="showToast('Group Pampering selected')" aria-label="Book Group Pampering"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:48.4%;top:89.5%;width:3.2%;height:2%" onclick="goToSlide(0)" aria-label="Home slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:55.2%;top:89.5%;width:3.2%;height:2%" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:61.9%;top:89.5%;width:3.2%;height:2%" onclick="goToSlide(2)" aria-label="Hair slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:68.7%;top:89.5%;width:3.2%;height:2%" onclick="goToSlide(3)" aria-label="Nails slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:75.4%;top:89.5%;width:3.2%;height:2%" onclick="goToSlide(4)" aria-label="Gallery slide"></button>
         </div>
       </section>
 
@@ -1012,7 +1032,7 @@
       <section class="slide">
         <div class="artwork-canvas gallery-artwork">
           <img class="desktop-art" src="gallery.png" alt="Artistry by Haritha gallery" />
-          <img class="mobile-art" src="mobile-gallery.png" alt="Artistry by Haritha mobile gallery" />
+          <img class="mobile-art" src="mobile-gallery.png?v=2" alt="Artistry by Haritha mobile gallery" />
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
           <button class="hotspot nav-gallery button-hover" aria-label="Gallery"></button>
@@ -1023,17 +1043,17 @@
           <!-- Mobile Gallery controls -->
           <button class="hotspot mobile-hotspot" style="left:87.3%;top:2.2%;width:10%;height:4.8%" onclick="openMobileMenu()" aria-label="Open menu"></button>
           <button class="hotspot mobile-hotspot button-hover" style="left:6.3%;top:10.9%;width:17.8%;height:3.1%" onclick="goToSlide(0)" aria-label="Back Home"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:36.4%;width:17.6%;height:3%" onclick="showToast('Traditional Elegance selected')" aria-label="View Traditional Elegance"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:36.4%;width:17.6%;height:3%" onclick="showToast('Bridal Grace selected')" aria-label="View Bridal Grace"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:57.3%;width:17.6%;height:3%" onclick="showToast('Celebration Glam selected')" aria-label="View Celebration Glam"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:57.3%;width:17.6%;height:3%" onclick="showToast('Soft Glam selected')" aria-label="View Soft Glam"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:78.2%;width:17.6%;height:3%" onclick="showToast('Radiant Beauty selected')" aria-label="View Radiant Beauty"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:78.2%;width:17.6%;height:3%" onclick="showToast('Festive Moments selected')" aria-label="View Festive Moments"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:48.4%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(0)" aria-label="Home slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:55.2%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:61.9%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(2)" aria-label="Hair slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:68.7%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(3)" aria-label="Nails slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:75.4%;top:86.5%;width:3.2%;height:2%" onclick="goToSlide(4)" aria-label="Gallery slide"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:40.1%;width:17.6%;height:3.2%" onclick="showToast('Traditional Elegance selected')" aria-label="View Traditional Elegance"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:40.1%;width:17.6%;height:3.2%" onclick="showToast('Bridal Grace selected')" aria-label="View Bridal Grace"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:61.7%;width:17.6%;height:3.2%" onclick="showToast('Celebration Glam selected')" aria-label="View Celebration Glam"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:61.7%;width:17.6%;height:3.2%" onclick="showToast('Soft Glam selected')" aria-label="View Soft Glam"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:84%;width:17.6%;height:3.2%" onclick="showToast('Radiant Beauty selected')" aria-label="View Radiant Beauty"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:84%;width:17.6%;height:3.2%" onclick="showToast('Festive Moments selected')" aria-label="View Festive Moments"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:48.4%;top:89.6%;width:3.2%;height:2%" onclick="goToSlide(0)" aria-label="Home slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:55.2%;top:89.6%;width:3.2%;height:2%" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:61.9%;top:89.6%;width:3.2%;height:2%" onclick="goToSlide(2)" aria-label="Hair slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:68.7%;top:89.6%;width:3.2%;height:2%" onclick="goToSlide(3)" aria-label="Nails slide"></button>
+          <button class="hotspot mobile-hotspot circle-hover" style="left:75.4%;top:89.6%;width:3.2%;height:2%" onclick="goToSlide(4)" aria-label="Gallery slide"></button>
         </div>
       </section>
 
@@ -1168,6 +1188,23 @@
         <path fill="#25D366" d="M22.2 18.8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-2-.9-3.4-2.1-4.5-4-.3-.5.3-.5.9-1.7.1-.2 0-.5-.1-.7l-1-2.4c-.3-.7-.6-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4s1.5 4 1.7 4.3c.2.3 2.9 4.5 7.1 6.2 2.6 1.1 3.6 1.2 4.9 1 1.5-.2 4.5-1.8 5.1-3.6.6-1.8.6-3.3.4-3.6-.3-.3-.6-.4-1-.6Z"/>
       </svg>`;
 
+    const instagramUrl = 'https://www.instagram.com/haritha_makeup_hairstyle/';
+    const instagramIconMarkup = `
+      <svg viewBox="0 0 32 32" role="img" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="instagram-gradient" x1="3" y1="29" x2="29" y2="3" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#FFD600"/>
+            <stop offset=".35" stop-color="#FF7A00"/>
+            <stop offset=".68" stop-color="#E1306C"/>
+            <stop offset="1" stop-color="#833AB4"/>
+          </linearGradient>
+        </defs>
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="url(#instagram-gradient)"/>
+        <rect x="8" y="8" width="16" height="16" rx="5" fill="none" stroke="#fff" stroke-width="2.2"/>
+        <circle cx="16" cy="16" r="4" fill="none" stroke="#fff" stroke-width="2.2"/>
+        <circle cx="22.2" cy="9.9" r="1.35" fill="#fff"/>
+      </svg>`;
+
     /* Mobile-only contact shown above the Home page Services button. */
     document.querySelector('.home-artwork').insertAdjacentHTML('beforeend', `
       <a class="mobile-whatsapp-call" href="${whatsappUrl}" target="_blank" rel="noopener" aria-label="Contact Haritha on WhatsApp at 614 707 8179">
@@ -1177,9 +1214,12 @@
         <span>614 707 8179</span>
       </a>`);
 
-    /* Keep WhatsApp one tap away on every mobile slide after Home. */
+    /* Keep WhatsApp and Instagram one tap away on every mobile slide after Home. */
     document.querySelectorAll('.artwork-canvas:not(.home-artwork)').forEach((canvas) => {
       canvas.insertAdjacentHTML('beforeend', `
+        <a class="mobile-instagram-slide" href="${instagramUrl}" target="_blank" rel="noopener" aria-label="Open Artistry by Haritha on Instagram">
+          ${instagramIconMarkup}
+        </a>
         <a class="mobile-whatsapp-slide" href="${whatsappUrl}" target="_blank" rel="noopener" aria-label="Contact Haritha on WhatsApp">
           ${whatsappIconMarkup}
         </a>`);
