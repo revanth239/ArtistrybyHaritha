@@ -99,6 +99,7 @@
 
     .mobile-hotspot,
     .mobile-whatsapp-call,
+    .mobile-whatsapp-slide,
     .mobile-menu {
       display: none;
     }
@@ -662,19 +663,25 @@
       .mobile-whatsapp-call {
         position: absolute;
         z-index: 30;
-        left: 31%;
-        top: 56.8%;
-        width: 38%;
-        height: 3.4%;
+        left: 27%;
+        top: 56.45%;
+        width: 46%;
+        height: 4%;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: clamp(7px, 1.8vw, 12px);
+        gap: clamp(8px, 2vw, 13px);
         border-radius: 8px;
-        background: #f8f0e8;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(250, 244, 237, .99) 0%,
+          rgba(250, 244, 237, .97) 58%,
+          rgba(250, 244, 237, .72) 76%,
+          rgba(250, 244, 237, 0) 100%
+        );
         color: #241f1b;
-        font-size: clamp(12px, 3.1vw, 19px);
-        font-weight: 600;
+        font-size: clamp(15px, 3.8vw, 23px);
+        font-weight: 700;
         letter-spacing: .015em;
         line-height: 1;
         text-decoration: none;
@@ -684,27 +691,45 @@
       }
 
       .mobile-whatsapp-icon {
-        width: clamp(19px, 4.8vw, 30px);
-        aspect-ratio: 1;
+        width: clamp(27px, 6.6vw, 42px);
         display: inline-flex;
         align-items: center;
         justify-content: center;
         flex: 0 0 auto;
-        border-radius: 50%;
-        background: #6e6157;
-        color: #fffaf5;
-        font-size: clamp(12px, 3vw, 18px);
-        font-weight: 400;
-        box-shadow: 0 2px 5px rgba(72, 57, 47, .22);
       }
 
       .mobile-whatsapp-icon svg {
-        width: 72%;
-        height: 72%;
+        width: 100%;
+        height: auto;
         display: block;
       }
 
-      .mobile-whatsapp-call:active {
+      .mobile-whatsapp-slide {
+        position: absolute;
+        z-index: 30;
+        top: 10.45%;
+        right: 5.8%;
+        width: 8.5%;
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 0;
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+
+      .mobile-whatsapp-slide svg {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: drop-shadow(0 2px 3px rgba(52, 42, 34, .18));
+      }
+
+      .mobile-whatsapp-call:active,
+      .mobile-whatsapp-slide:active {
         transform: scale(.97);
       }
 
@@ -1133,17 +1158,32 @@
     let touchStartX = 0;
     let touchStartY = 0;
 
+    const whatsappUrl = 'https://wa.me/16147078179?text=Hello%20Haritha%2C%20I%20would%20like%20to%20book%20an%20appointment.';
+    const whatsappIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAdCAYAAABSZrcyAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOtSURBVEhLxZddTBxVGIafMzs7w678LHQLlrZG2BjERmitYq1oTWOMQDU0UWN6U42/aXqhXvSC9MLExkQvvCrqjWnqjUnTFBRsqiHGVpT+xIZCa0WprbLR8ld2YV3Y2Z1zvAA3zNRluOjiczGZnMy87znf+eb7zojBEVvxP6G5B5zMzytfs/MwF4uutx6Heb5WmIusucrjCnORNV9pY9xhX2nEcj41pRRCzMfmp5krdI+f4uzUBZJ6CgQEMyZbQnW0rH6M2qLqm97JhRgcyajlBD1lWxz6q5PO+En8ScHmkhoqzdWAIGqN0R+7jF0geDr0KLvXtFKgm26Jm/BcuVSStJ3mwNWPOS9+o8V4mOcqniBshhzPTVgxjo320DXXSz0R9le/iqH50UTunRUDI7byWnf7tc84njnD3uJnaCpvzI5LJQEQQiAWondi7AcOTh+lWb+fPXfuyj77X2hexkOJ3/ky8T3NegNN5Y2cmPiOtpF2YulpNKExbytQKKSSPFm+lR36g3Qnevl55qpbzkHumCzwxfUeArbB7nWt/G3PcvhaBwPpYbpGvwVALZSmxZPYVdlCQcbg89FvXGpOPM374gNsCFRRqAdJZmaxZBqVSDMlpx0Znb1XUGwUUheMcDZ+wS3nwNN8zm+x1iwHIGyUsqnsHjAE20MNCCGwlQ0L+y6Vykai0ign6U87tNx4moNw1PyX1z9LsbyND6NHmEzF0IVORtlMWjE0IRZl978pmBtP80DGz5/pcQAUktvNMPsqXyBqj/PmlffpvfEjh6Kd7P3lHT6JdpDIJAGIpq8TSBsuNSee5ltK6rmYGGbCiqEJH7a02RS6m/eq3sDUgrw7+SkdsR5iIsnRia+Zs1Mk7VkGk8M8EKpzyznwNG8KN2LpNn03ziNR2EikktQWVnHwrn28VfY8W4Mb2Ry8l7Y7XiFslnI42oXlk+ys2O6Wc6AtWd6AhJwDZVMZqEBDZKuWVBJD8/P4qofYH3mNA1V7eKTsPr4aPcVxq4/mwkZqCqvccg48i8yl6SGwoMRXxLn4JbrHTjJpTc0XmEWNYzIV46M/jtA+c4w6Uc1L63dmK2AuPBtL29AH9M/+CpYC0wd+hZ4UbAzVsM5fAcCINUp//DLS1HiqdBsvrmnF9C2dbCynsbx+8W1WFZQR8a+ltqiagB6gZ/w0p+P9JHwpNAGBjEFDaT07wtvYUBSB5bfUpc3ziWe25xPHAXKlcRwgV3oCjrAvnR63Ho89z+/v0j/z/2Qx4ex7jgAAAABJRU5ErkJggg==';
+
+    /* Transparent WhatsApp mark: no colored square or background box. */
+    const whatsappIconMarkup = `
+      <svg viewBox="0 0 32 32" role="img" aria-hidden="true" focusable="false">
+        <path fill="#25D366" d="M16 3A13 13 0 0 0 4.8 22.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.5c-2.1 0-4.2-.6-6-1.8l-.4-.2-3.9 1 1.1-3.8-.3-.4A10.5 10.5 0 1 1 16 26.5Z"/>
+        <path fill="#25D366" d="M22.2 18.8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-2-.9-3.4-2.1-4.5-4-.3-.5.3-.5.9-1.7.1-.2 0-.5-.1-.7l-1-2.4c-.3-.7-.6-.6-.9-.6h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4s1.5 4 1.7 4.3c.2.3 2.9 4.5 7.1 6.2 2.6 1.1 3.6 1.2 4.9 1 1.5-.2 4.5-1.8 5.1-3.6.6-1.8.6-3.3.4-3.6-.3-.3-.6-.4-1-.6Z"/>
+      </svg>`;
+
     /* Mobile-only contact shown above the Home page Services button. */
     document.querySelector('.home-artwork').insertAdjacentHTML('beforeend', `
-      <a class="mobile-whatsapp-call" href="https://wa.me/16147078179?text=Hello%20Haritha%2C%20I%20would%20like%20to%20book%20an%20appointment." target="_blank" rel="noopener" aria-label="Contact Haritha on WhatsApp at 614 707 8179">
+      <a class="mobile-whatsapp-call" href="${whatsappUrl}" target="_blank" rel="noopener" aria-label="Contact Haritha on WhatsApp at 614 707 8179">
         <span class="mobile-whatsapp-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" focusable="false">
-            <path d="M12 3a8 8 0 0 0-6.9 12L4 20l5-1.1A8 8 0 1 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M8.5 8.1c.35-.27.7-.14.9.25l.75 1.55c.13.28.08.53-.12.75l-.62.67c.7 1.45 1.83 2.58 3.28 3.28l.67-.62c.22-.2.47-.25.75-.12l1.55.75c.39.2.52.55.25.9-.46.66-1.22 1.06-2.03 1-3.55-.28-6.4-3.13-6.68-6.68-.06-.81.34-1.57 1-2.03Z" fill="currentColor"/>
-          </svg>
+          ${whatsappIconMarkup}
         </span>
         <span>614 707 8179</span>
       </a>`);
+
+    /* Keep WhatsApp one tap away on every mobile slide after Home. */
+    document.querySelectorAll('.artwork-canvas:not(.home-artwork)').forEach((canvas) => {
+      canvas.insertAdjacentHTML('beforeend', `
+        <a class="mobile-whatsapp-slide" href="${whatsappUrl}" target="_blank" rel="noopener" aria-label="Contact Haritha on WhatsApp">
+          ${whatsappIconMarkup}
+        </a>`);
+    });
 
     /* The Follow Us labels are printed inside each image. These precise
        hotspots restore both the hover effect and the actual social links. */
