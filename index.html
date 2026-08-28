@@ -641,7 +641,12 @@
       }
 
       .artwork-canvas {
-        width: 100vw;
+        /* Fit the complete 740x1600 portrait artwork inside the currently
+           visible browser area. On shorter phone viewports this scales by
+           height and leaves small cream margins at the sides instead of
+           forcing the service cards below the fold. */
+        width: min(100vw, 46.25vh);
+        width: min(100vw, 46.25dvh);
         max-width: none;
         aspect-ratio: 740 / 1600;
       }
