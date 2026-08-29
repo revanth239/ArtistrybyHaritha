@@ -659,6 +659,37 @@
       box-shadow: 0 0 0 3px rgba(201, 164, 111, .18);
     }
 
+    .booking-category,
+    .booking-service {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 600;
+      letter-spacing: .015em;
+      color: #49382d;
+    }
+
+    .booking-category option,
+    .booking-service option {
+      padding: 9px 12px;
+      background: #fffaf6;
+      color: #49382d;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.45;
+    }
+
+    .booking-category option[value=""],
+    .booking-service option[value=""] {
+      color: #8a7768;
+      font-style: italic;
+    }
+
+    .booking-category option:checked,
+    .booking-service option:checked {
+      background: linear-gradient(#e6c58e, #e6c58e);
+      color: #35271f;
+    }
+
     .booking-name { top: 36.05%; }
     .booking-cell { top: 44.40%; }
     .booking-category { top: 52.65%; }
@@ -1018,6 +1049,17 @@
       .booking-cell { top: 33.25%; }
       .booking-category { top: 38.75%; }
       .booking-service { top: 44.15%; }
+
+      .booking-category,
+      .booking-service {
+        font-size: clamp(13px, 3.25vw, 17px);
+        font-weight: 600;
+      }
+
+      .booking-category option,
+      .booking-service option {
+        font-size: 15px;
+      }
 
       .booking-date-picker-ui {
         left: 7.65%;
@@ -1709,6 +1751,7 @@
 
     function updateDatePickerVisibility() {
       const hasSelectedService = Boolean(selectedServiceDuration);
+      if (hasSelectedService) bookingDate.min = getBusinessNow().dateKey;
       bookingDatePicker.hidden = !hasSelectedService;
       bookingDate.disabled = !hasSelectedService;
       bookingDatePicker.setAttribute('aria-hidden', hasSelectedService ? 'false' : 'true');
@@ -1750,6 +1793,27 @@
       return `${year}-${month}-${day}`;
     }
 
+    function getBusinessNow() {
+      const parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: BUSINESS_TIME_ZONE,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hourCycle: 'h23'
+      }).formatToParts(new Date()).reduce((values, part) => {
+        if (part.type !== 'literal') values[part.type] = part.value;
+        return values;
+      }, {});
+
+      return {
+        dateKey: `${parts.year}-${parts.month}-${parts.day}`,
+        minutes: Number(parts.hour) * 60 + Number(parts.minute) + Number(parts.second) / 60
+      };
+    }
+
     function dateFromInputValue(value) {
       const [year, month, day] = value.split('-').map(Number);
       if (!year || !month || !day) return null;
@@ -1780,13 +1844,18 @@
       const isWeekend = date.getDay() === 0 || date.getDay() === 6;
       const openingMinutes = isWeekend ? 0 : 15 * 60;
       const closingMinutes = isWeekend ? 24 * 60 : 20 * 60;
+      const selectedDateKey = dateKeyFromDate(date);
+      const businessNow = getBusinessNow();
       const candidates = [];
+
+      if (selectedDateKey < businessNow.dateKey) return candidates;
 
       for (
         let start = openingMinutes;
         start + durationMinutes <= closingMinutes;
         start += SLOT_INTERVAL_MINUTES
       ) {
+        if (selectedDateKey === businessNow.dateKey && start < businessNow.minutes) continue;
         const blocks = occupiedBlocks(start, durationMinutes);
         if (blocks.every((minute) => !currentlyBookedMinutes.has(minute))) {
           candidates.push(start);
@@ -1799,6 +1868,13 @@
       if (!selectedServiceDuration) {
         setBookingMessage('Please select a service first.', 'error');
         showToast('Please select a service first.');
+        return;
+      }
+
+      if (dateKeyFromDate(date) < getBusinessNow().dateKey) {
+        bookingDate.value = '';
+        bookingSlots.hidden = true;
+        setBookingMessage('Please select today or a future date in Eastern Time.', 'error');
         return;
       }
 
@@ -1888,6 +1964,14 @@
         return;
       }
 
+      if (!appointmentCandidates(selectedBookingDate, selectedServiceDuration).includes(selectedBookingStart)) {
+        selectedBookingStart = null;
+        bookingSubmit.disabled = true;
+        renderAvailableBookingSlots();
+        setBookingMessage('That time has passed or is no longer available. Please select another time.', 'error');
+        return;
+      }
+
       bookingSubmit.disabled = true;
       bookingSubmit.textContent = 'RESERVING…';
       setBookingMessage('Saving your booking request…');
@@ -1929,7 +2013,7 @@
       }
     });
 
-    bookingDate.min = dateKeyFromDate(new Date());
+    bookingDate.min = getBusinessNow().dateKey;
     updateDatePickerVisibility();
 
     document.querySelectorAll('[aria-label^="Book "]:not([aria-label="Book Now"])').forEach((button) => {
