@@ -38,6 +38,18 @@
       font: inherit;
     }
 
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     /* =========================================================
        MASTER SLIDER
     ========================================================= */
@@ -52,14 +64,14 @@
 
     .slides {
       display: flex;
-      width: 500%;
+      width: 600%;
       height: 100%;
       transition: transform .72s cubic-bezier(.77, 0, .18, 1);
     }
 
     .slide {
       position: relative;
-      width: 20%;
+      width: calc(100% / 6);
       height: 100%;
       flex-shrink: 0;
       overflow: hidden;
@@ -610,6 +622,203 @@
     }
 
     /* =========================================================
+       BOOKING FORM
+    ========================================================= */
+
+    .booking-form {
+      position: absolute;
+      inset: 0;
+      z-index: 28;
+      pointer-events: none;
+    }
+
+    .booking-control,
+    .booking-date-picker-ui,
+    .booking-slots-ui,
+    .booking-submit {
+      pointer-events: auto;
+    }
+
+    .booking-control {
+      position: absolute;
+      left: 17.65%;
+      width: 27.35%;
+      height: 4.05%;
+      padding: 0 1.05%;
+      border: 1px solid rgba(201, 164, 111, .68);
+      border-radius: 8px;
+      outline: 0;
+      background: rgba(255, 252, 248, .98);
+      color: #2f2925;
+      font-size: clamp(10px, 1.03vw, 16px);
+      box-shadow: inset 0 1px 2px rgba(91, 68, 47, .04);
+    }
+
+    .booking-control:focus {
+      border-color: #a87942;
+      box-shadow: 0 0 0 3px rgba(201, 164, 111, .18);
+    }
+
+    .booking-name { top: 36.05%; }
+    .booking-cell { top: 44.40%; }
+    .booking-category { top: 52.65%; }
+    .booking-service { top: 60.95%; }
+
+    .booking-date-picker-ui {
+      position: absolute;
+      left: 52.1%;
+      top: 34.1%;
+      width: 31.3%;
+      min-height: 7.4%;
+      padding: .55% 1%;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(201, 164, 111, .62);
+      background: rgba(255, 250, 246, .76);
+      border-radius: 10px;
+      color: #2f2925;
+      box-shadow: 0 4px 14px rgba(91, 68, 47, .08);
+    }
+
+    .booking-date-picker-ui[hidden] {
+      display: none !important;
+    }
+
+    .booking-date-label {
+      white-space: nowrap;
+      font-size: clamp(9px, .95vw, 15px);
+      font-weight: 600;
+      color: #51443a;
+    }
+
+    .booking-date-input {
+      width: 100%;
+      min-width: 0;
+      height: clamp(36px, 3vw, 46px);
+      padding: 0 12px;
+      border: 1px solid rgba(184, 117, 47, .72);
+      border-radius: 8px;
+      background: #fffaf6;
+      color: #2f2925;
+      font: 500 clamp(10px, 1vw, 16px) inherit;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .booking-date-input:hover,
+    .booking-date-input:focus {
+      border-color: #a9672b;
+      box-shadow: 0 0 0 3px rgba(217, 154, 69, .18);
+    }
+
+    .booking-date-input::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: .72;
+    }
+
+    .booking-slots-ui {
+      position: absolute;
+      left: 49.45%;
+      top: 43.2%;
+      width: 36.4%;
+      height: 24.4%;
+      padding: .3% .45%;
+      overflow-y: auto;
+      border-radius: 8px;
+      background: rgba(255, 250, 246, .99);
+      scrollbar-width: thin;
+      scrollbar-color: #c9a46f transparent;
+    }
+
+    .booking-slots-ui[hidden] { display: none; }
+
+    .booking-slots-title {
+      margin-bottom: 5px;
+      text-align: center;
+      font: italic clamp(9px, 1.08vw, 17px) Georgia, "Times New Roman", serif;
+    }
+
+    .booking-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px 8px;
+    }
+
+    .booking-slot {
+      min-height: 34px;
+      padding: 5px 7px;
+      border: 1px solid rgba(201, 164, 111, .82);
+      border-radius: 8px;
+      background: #fffaf6;
+      color: #2f2925;
+      font-size: clamp(8px, .88vw, 14px);
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .booking-slot:hover:not(.selected),
+    .booking-slot:focus-visible:not(.selected) {
+      border-color: #b8752f;
+      background: linear-gradient(135deg, #f3cf91, #d99a45);
+      color: #3f2d1f;
+      box-shadow: 0 5px 13px rgba(167, 103, 39, .28);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .booking-slot.selected {
+      border-color: #6b594a;
+      background: linear-gradient(135deg, #796654, #54483e);
+      color: white;
+      box-shadow: 0 4px 12px rgba(75, 58, 45, .20);
+    }
+
+    .booking-empty,
+    .booking-loading {
+      padding: 13px 8px;
+      text-align: center;
+      color: #77695f;
+      font-size: clamp(8px, .9vw, 14px);
+    }
+
+    .booking-submit {
+      position: absolute;
+      left: 36.45%;
+      top: 68.7%;
+      width: 25.2%;
+      height: 4.35%;
+      border: 1px solid rgba(151, 103, 56, .55);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(226, 184, 115, .98), rgba(165, 105, 48, .98));
+      color: white;
+      font-size: clamp(9px, 1.15vw, 18px);
+      cursor: pointer;
+      box-shadow: 0 5px 13px rgba(91, 59, 31, .25);
+    }
+
+    .booking-submit:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .booking-message {
+      position: absolute;
+      left: 34%;
+      top: 73.15%;
+      width: 30%;
+      min-height: 2%;
+      text-align: center;
+      color: #6e4d2f;
+      font-size: clamp(8px, .82vw, 13px);
+      pointer-events: none;
+    }
+
+    .booking-message.success { color: #277246; font-weight: 700; }
+    .booking-message.error { color: #a33b32; font-weight: 700; }
+
+    /* =========================================================
        RESPONSIVE
     ========================================================= */
 
@@ -795,6 +1004,79 @@
         max-width: 88vw;
         text-align: center;
       }
+
+      .booking-control {
+        left: 8.55%;
+        width: 82.75%;
+        height: 2.86%;
+        padding: 0 2.1%;
+        border-radius: 8px;
+        font-size: clamp(13px, 3.7vw, 20px);
+      }
+
+      .booking-name { top: 27.65%; }
+      .booking-cell { top: 33.25%; }
+      .booking-category { top: 38.75%; }
+      .booking-service { top: 44.15%; }
+
+      .booking-date-picker-ui {
+        left: 7.65%;
+        top: 55.55%;
+        width: 84.7%;
+        min-height: 5.3%;
+        padding: .8% 2%;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 10px;
+      }
+
+      .booking-date-label {
+        font-size: clamp(12px, 3.15vw, 18px);
+      }
+
+      .booking-date-input {
+        height: clamp(38px, 9vw, 52px);
+        font-size: clamp(12px, 3.2vw, 18px);
+      }
+
+      .booking-slots-ui {
+        left: 7.65%;
+        top: 62.2%;
+        width: 84.7%;
+        height: 20.8%;
+        padding: .5% .8%;
+      }
+
+      .booking-slots-title {
+        margin-bottom: 6px;
+        font-size: clamp(12px, 3.35vw, 19px);
+      }
+
+      .booking-slots-grid { gap: 7px 8px; }
+
+      .booking-slot {
+        min-height: 35px;
+        font-size: clamp(10px, 2.8vw, 16px);
+      }
+
+      .booking-empty,
+      .booking-loading {
+        font-size: clamp(11px, 3vw, 17px);
+      }
+
+      .booking-submit {
+        left: 5.55%;
+        top: 84.7%;
+        width: 88.9%;
+        height: 3.05%;
+        font-size: clamp(13px, 3.8vw, 21px);
+      }
+
+      .booking-message {
+        left: 9%;
+        top: 88.15%;
+        width: 82%;
+        font-size: clamp(10px, 2.8vw, 16px);
+      }
     }
 
   </style>
@@ -823,7 +1105,7 @@
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
           <button class="hotspot nav-gallery button-hover" onclick="goToSlide(4)" aria-label="Gallery"></button>
-          <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
+          <button class="hotspot nav-book button-hover" onclick="goToSlide(5)" aria-label="Book Now"></button>
 
           <!-- Side arrows -->
           <button class="hotspot home-arrow-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
@@ -889,7 +1171,7 @@
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
           <button class="hotspot nav-gallery button-hover" onclick="goToSlide(4)" aria-label="Gallery"></button>
-          <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
+          <button class="hotspot nav-book button-hover" onclick="goToSlide(5)" aria-label="Book Now"></button>
 
           <button class="hotspot sub-back button-hover" onclick="goToSlide(0)" aria-label="Back Home"></button>
           <button class="hotspot sub-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
@@ -942,7 +1224,7 @@
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
           <button class="hotspot nav-gallery button-hover" onclick="goToSlide(4)" aria-label="Gallery"></button>
-          <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
+          <button class="hotspot nav-book button-hover" onclick="goToSlide(5)" aria-label="Book Now"></button>
 
           <button class="hotspot sub-back button-hover" onclick="goToSlide(0)" aria-label="Back Home"></button>
           <button class="hotspot sub-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
@@ -991,7 +1273,7 @@
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
           <button class="hotspot nav-gallery button-hover" onclick="goToSlide(4)" aria-label="Gallery"></button>
-          <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
+          <button class="hotspot nav-book button-hover" onclick="goToSlide(5)" aria-label="Book Now"></button>
 
           <button class="hotspot sub-back button-hover" onclick="goToSlide(0)" aria-label="Back Home"></button>
           <button class="hotspot sub-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
@@ -1036,7 +1318,7 @@
           <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
           <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
           <button class="hotspot nav-gallery button-hover" aria-label="Gallery"></button>
-          <button class="hotspot nav-book button-hover" onclick="showToast('Booking request selected')" aria-label="Book Now"></button>
+          <button class="hotspot nav-book button-hover" onclick="goToSlide(5)" aria-label="Book Now"></button>
           <button class="hotspot sub-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
           <button class="hotspot sub-right circle-hover" onclick="nextSlide()" aria-label="Next slide"></button>
 
@@ -1057,6 +1339,56 @@
         </div>
       </section>
 
+      <!-- =====================================================
+           SLIDE 6 — BOOKING
+      ====================================================== -->
+      <section class="slide">
+        <div class="artwork-canvas booking-artwork">
+          <img class="desktop-art" src="booking.png" alt="Book an appointment with Artistry by Haritha" />
+          <img class="mobile-art" src="mobile-booking.png" alt="Book an appointment with Artistry by Haritha on mobile" />
+
+          <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
+          <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
+          <button class="hotspot nav-gallery button-hover" onclick="goToSlide(4)" aria-label="Gallery"></button>
+          <button class="hotspot sub-back button-hover" onclick="goToSlide(0)" aria-label="Back Home"></button>
+          <button class="hotspot sub-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
+          <button class="hotspot sub-right circle-hover" onclick="nextSlide()" aria-label="Next slide"></button>
+          <button class="hotspot mobile-hotspot" style="left:87.3%;top:2.2%;width:10%;height:4.8%" onclick="openMobileMenu()" aria-label="Open menu"></button>
+          <button class="hotspot mobile-hotspot button-hover" style="left:5.4%;top:10.6%;width:17.8%;height:3.1%" onclick="goToSlide(0)" aria-label="Back Home"></button>
+
+          <form class="booking-form" id="bookingForm" novalidate>
+            <label class="sr-only" for="bookingName">Full Name</label>
+            <input class="booking-control booking-name" id="bookingName" name="fullName" type="text" autocomplete="name" maxlength="80" required aria-label="Full Name" />
+
+            <label class="sr-only" for="bookingCell">Cell Number</label>
+            <input class="booking-control booking-cell" id="bookingCell" name="cell" type="tel" autocomplete="tel" maxlength="24" required aria-label="Cell Number" />
+
+            <label class="sr-only" for="bookingCategory">Service Category</label>
+            <select class="booking-control booking-category" id="bookingCategory" name="category" required aria-label="Service Category">
+              <option value="">Select a category</option>
+            </select>
+
+            <label class="sr-only" for="bookingService">Select Service</label>
+            <select class="booking-control booking-service" id="bookingService" name="service" required disabled aria-label="Select Service">
+              <option value="">Select a service</option>
+            </select>
+
+            <section class="booking-date-picker-ui" id="bookingDatePicker" aria-label="Choose appointment date" hidden>
+              <label class="booking-date-label" for="bookingDate">Appointment Date</label>
+              <input class="booking-date-input" id="bookingDate" name="appointmentDate" type="date" required />
+            </section>
+
+            <section class="booking-slots-ui" id="bookingSlots" aria-live="polite" hidden>
+              <div class="booking-slots-title" id="bookingSlotsTitle"></div>
+              <div class="booking-slots-grid" id="bookingSlotsGrid"></div>
+            </section>
+
+            <button class="booking-submit" id="bookingSubmit" type="submit" disabled>SUBMIT BOOKING REQUEST</button>
+            <div class="booking-message" id="bookingMessage" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </section>
+
     </div>
   </div>
 
@@ -1074,7 +1406,7 @@
         <button onclick="mobileNavigate(3)">Nails &amp; Care</button>
         <button onclick="mobileNavigate(4)">Gallery</button>
         <button onclick="openServicesFromMenu()">Services</button>
-        <button class="mobile-book-now" onclick="bookFromMenu()">Book Now</button>
+        <button class="mobile-book-now" onclick="mobileNavigate(5)">Book Now</button>
       </nav>
     </aside>
   </div>
@@ -1164,9 +1496,91 @@
 
   <div class="toast" id="toast">Booking request selected.</div>
 
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import {
+      collection,
+      doc,
+      getDocs,
+      getFirestore,
+      query,
+      runTransaction,
+      serverTimestamp,
+      where
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCC1rQLmsUUS6PunkliLn3zIPkaAqqpVdg",
+      authDomain: "poker-splitter-3c761.firebaseapp.com",
+      projectId: "poker-splitter-3c761",
+      storageBucket: "poker-splitter-3c761.firebasestorage.app",
+      messagingSenderId: "409433676179",
+      appId: "1:409433676179:web:20ec896a2b71fe8b2af066"
+    };
+
+    const firebaseApp = initializeApp(firebaseConfig);
+    const bookingDb = getFirestore(firebaseApp);
+    const bookingAuth = getAuth(firebaseApp);
+
+    async function ensureAnonymousUser() {
+      if (bookingAuth.currentUser) return bookingAuth.currentUser;
+      const credential = await signInAnonymously(bookingAuth);
+      return credential.user;
+    }
+
+    window.bookingApi = {
+      async getBookedSlotMinutes(dateKey) {
+        const bookedQuery = query(
+          collection(bookingDb, "bookingSlots"),
+          where("date", "==", dateKey)
+        );
+        const snapshot = await getDocs(bookedQuery);
+        return snapshot.docs.map((slotDocument) => slotDocument.data().startMinutes);
+      },
+
+      async reserve(payload, occupiedMinutes) {
+        const user = await ensureAnonymousUser();
+        const bookingRef = doc(collection(bookingDb, "bookings"));
+        const slotRefs = occupiedMinutes.map((minute) =>
+          doc(bookingDb, "bookingSlots", `${payload.date}_${String(minute).padStart(4, "0")}`)
+        );
+
+        await runTransaction(bookingDb, async (transaction) => {
+          const existingSlots = await Promise.all(slotRefs.map((slotRef) => transaction.get(slotRef)));
+          if (existingSlots.some((slotSnapshot) => slotSnapshot.exists())) {
+            const conflict = new Error("That appointment time was just booked. Please choose another time.");
+            conflict.code = "booking/conflict";
+            throw conflict;
+          }
+
+          transaction.set(bookingRef, {
+            ...payload,
+            customerUid: user.uid,
+            status: "pending",
+            createdAt: serverTimestamp()
+          });
+
+          slotRefs.forEach((slotRef, index) => {
+            transaction.set(slotRef, {
+              bookingId: bookingRef.id,
+              date: payload.date,
+              startMinutes: occupiedMinutes[index],
+              createdAt: serverTimestamp()
+            });
+          });
+        });
+
+        return bookingRef.id;
+      }
+    };
+
+    window.dispatchEvent(new Event("booking-api-ready"));
+  </script>
+
   <script>
     let currentSlide = 0;
-    const totalSlides = 5;
+    const totalSlides = 6;
     const slider = document.getElementById('slider');
     const slides = document.getElementById('slides');
     const servicesPopup = document.getElementById('servicesPopup');
@@ -1174,9 +1588,359 @@
     const toast = document.getElementById('toast');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuClose = document.getElementById('mobileMenuClose');
+    const bookingForm = document.getElementById('bookingForm');
+    const bookingName = document.getElementById('bookingName');
+    const bookingCell = document.getElementById('bookingCell');
+    const bookingCategory = document.getElementById('bookingCategory');
+    const bookingService = document.getElementById('bookingService');
+    const bookingDatePicker = document.getElementById('bookingDatePicker');
+    const bookingDate = document.getElementById('bookingDate');
+    const bookingSlots = document.getElementById('bookingSlots');
+    const bookingSlotsTitle = document.getElementById('bookingSlotsTitle');
+    const bookingSlotsGrid = document.getElementById('bookingSlotsGrid');
+    const bookingSubmit = document.getElementById('bookingSubmit');
+    const bookingMessage = document.getElementById('bookingMessage');
     let toastTimer;
     let touchStartX = 0;
     let touchStartY = 0;
+
+    /* Starter service catalog. Update only this object when the final service
+       list and exact durations are available. Durations are in minutes. */
+    const SERVICE_CATALOG = {
+      'Bridal Makeup': [
+        { name: 'Soft Glam', duration: 90 },
+        { name: 'Traditional Glam', duration: 120 },
+        { name: 'Bridal Transformation', duration: 180 },
+        { name: 'Radiant Bride', duration: 120 },
+        { name: 'Golden Elegance', duration: 120 },
+        { name: 'Natural Glow', duration: 90 }
+      ],
+      'Hair Styling': [
+        { name: 'Traditional Bridal Braid', duration: 90 },
+        { name: 'Traditional Floral Braid', duration: 90 },
+        { name: 'Romantic Open Curls', duration: 60 },
+        { name: 'Elegant Messy Bun', duration: 60 }
+      ],
+      'Nails': [
+        { name: 'Basic Manicure', duration: 30 },
+        { name: 'Gel Manicure', duration: 60 },
+        { name: 'Pedicure', duration: 60 },
+        { name: 'Gel Pedicure', duration: 75 },
+        { name: 'Gel X', duration: 90 },
+        { name: 'Nail Art', duration: 60 },
+        { name: 'Gel or Acrylic Removal', duration: 45 },
+        { name: 'Chic Monochrome Art', duration: 75 },
+        { name: 'Festive Crimson', duration: 75 },
+        { name: 'Kids Nail Fun', duration: 60 },
+        { name: 'Nail Party Experience', duration: 120 },
+        { name: 'Precision Nail Care', duration: 60 },
+        { name: 'Group Pampering', duration: 120 }
+      ],
+      'Threading': [
+        { name: 'Eyebrow', duration: 15 },
+        { name: 'Upper Lip', duration: 15 },
+        { name: 'Chin', duration: 15 },
+        { name: 'Neck', duration: 20 },
+        { name: 'Forehead', duration: 15 },
+        { name: 'Sides', duration: 20 },
+        { name: 'Full Face', duration: 45 }
+      ],
+      'Waxing': [
+        { name: 'Eyebrow / Upper Lip / Chin', duration: 30 },
+        { name: 'Neck / Forehead / Sides', duration: 30 },
+        { name: 'Full Face', duration: 45 },
+        { name: 'Stomach & Back', duration: 60 },
+        { name: 'Armpit & Full Arm', duration: 60 },
+        { name: 'Half & Full Legs', duration: 75 },
+        { name: 'Bikini & Brazilian', duration: 60 }
+      ],
+      'Facials': [
+        { name: 'Express Facial', duration: 30 },
+        { name: 'Herbal Facial', duration: 60 },
+        { name: 'Gold / Pearl / Diamond Facial', duration: 75 },
+        { name: 'Anti Aging Facial', duration: 75 },
+        { name: 'Dermaplane Facial', duration: 60 },
+        { name: 'O3 Vitamin / Bridal Facial', duration: 90 }
+      ],
+      'Hair Care': [
+        { name: 'Henna Application', duration: 90 },
+        { name: 'Hair Color', duration: 120 },
+        { name: 'Hair Cut', duration: 45 },
+        { name: 'Layer / Step / Feather', duration: 60 },
+        { name: 'Head Massage', duration: 30 }
+      ],
+      'Lashes & Draping': [
+        { name: 'Lash Lifting & Tinting', duration: 75 },
+        { name: 'Eyebrow Tinting', duration: 30 },
+        { name: 'Brow Lamination & Tinting', duration: 60 },
+        { name: 'Saree Draping', duration: 45 },
+        { name: 'Saree Preplating', duration: 60 }
+      ]
+    };
+
+    const BUSINESS_TIME_ZONE = 'America/New_York';
+    const SLOT_INTERVAL_MINUTES = 30;
+    let selectedBookingDate = null;
+    let selectedBookingStart = null;
+    let selectedServiceDuration = null;
+    let currentlyBookedMinutes = new Set();
+
+    Object.keys(SERVICE_CATALOG).forEach((category) => {
+      const option = document.createElement('option');
+      option.value = category;
+      option.textContent = category;
+      bookingCategory.appendChild(option);
+    });
+
+    function setBookingMessage(message, type = '') {
+      bookingMessage.textContent = message;
+      bookingMessage.className = `booking-message ${type}`.trim();
+    }
+
+    function clearBookingSelection() {
+      selectedBookingDate = null;
+      selectedBookingStart = null;
+      bookingDate.value = '';
+      bookingSlots.hidden = true;
+      bookingSlotsGrid.innerHTML = '';
+      bookingSubmit.disabled = true;
+      setBookingMessage('');
+    }
+
+    function updateDatePickerVisibility() {
+      const hasSelectedService = Boolean(selectedServiceDuration);
+      bookingDatePicker.hidden = !hasSelectedService;
+      bookingDate.disabled = !hasSelectedService;
+      bookingDatePicker.setAttribute('aria-hidden', hasSelectedService ? 'false' : 'true');
+    }
+
+    function openBooking(category = '', serviceName = '') {
+      goToSlide(5);
+      if (!category) return;
+
+      bookingCategory.value = category;
+      bookingCategory.dispatchEvent(new Event('change'));
+      if (serviceName && [...bookingService.options].some((option) => option.value === serviceName)) {
+        bookingService.value = serviceName;
+        bookingService.dispatchEvent(new Event('change'));
+      }
+    }
+
+    function formatDuration(minutes) {
+      if (minutes % 60 === 0) {
+        const hours = minutes / 60;
+        return `${hours}-${hours === 1 ? 'Hour' : 'Hour'}`;
+      }
+      return `${minutes}-Minute`;
+    }
+
+    function formatClock(totalMinutes) {
+      const normalized = totalMinutes % 1440;
+      const hours24 = Math.floor(normalized / 60);
+      const minutes = normalized % 60;
+      const suffix = hours24 >= 12 ? 'PM' : 'AM';
+      const hours12 = hours24 % 12 || 12;
+      return `${hours12}:${String(minutes).padStart(2, '0')} ${suffix}`;
+    }
+
+    function dateKeyFromDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function dateFromInputValue(value) {
+      const [year, month, day] = value.split('-').map(Number);
+      if (!year || !month || !day) return null;
+      return new Date(year, month - 1, day);
+    }
+
+    function waitForBookingApi() {
+      if (window.bookingApi) return Promise.resolve(window.bookingApi);
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error('The booking service could not be loaded. Please refresh and try again.')), 8000);
+        window.addEventListener('booking-api-ready', () => {
+          clearTimeout(timeout);
+          resolve(window.bookingApi);
+        }, { once: true });
+      });
+    }
+
+    function occupiedBlocks(startMinutes, durationMinutes) {
+      const blocks = [];
+      const reservedUntil = startMinutes + Math.ceil(durationMinutes / SLOT_INTERVAL_MINUTES) * SLOT_INTERVAL_MINUTES;
+      for (let minute = startMinutes; minute < reservedUntil; minute += SLOT_INTERVAL_MINUTES) {
+        blocks.push(minute);
+      }
+      return blocks;
+    }
+
+    function appointmentCandidates(date, durationMinutes) {
+      const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+      const openingMinutes = isWeekend ? 0 : 15 * 60;
+      const closingMinutes = isWeekend ? 24 * 60 : 20 * 60;
+      const candidates = [];
+
+      for (
+        let start = openingMinutes;
+        start + durationMinutes <= closingMinutes;
+        start += SLOT_INTERVAL_MINUTES
+      ) {
+        const blocks = occupiedBlocks(start, durationMinutes);
+        if (blocks.every((minute) => !currentlyBookedMinutes.has(minute))) {
+          candidates.push(start);
+        }
+      }
+      return candidates;
+    }
+
+    async function selectBookingDate(date) {
+      if (!selectedServiceDuration) {
+        setBookingMessage('Please select a service first.', 'error');
+        showToast('Please select a service first.');
+        return;
+      }
+
+      selectedBookingDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      selectedBookingStart = null;
+      bookingDate.value = dateKeyFromDate(selectedBookingDate);
+      bookingSubmit.disabled = true;
+      setBookingMessage('');
+      bookingSlots.hidden = false;
+      bookingSlotsTitle.textContent = `Available ${formatDuration(selectedServiceDuration)} Appointments`;
+      bookingSlotsGrid.innerHTML = '<div class="booking-loading" style="grid-column:1/-1">Checking availability…</div>';
+
+      try {
+        const api = await waitForBookingApi();
+        const bookedMinutes = await api.getBookedSlotMinutes(dateKeyFromDate(selectedBookingDate));
+        currentlyBookedMinutes = new Set(bookedMinutes);
+        renderAvailableBookingSlots();
+      } catch (error) {
+        bookingSlotsGrid.innerHTML = '<div class="booking-empty" style="grid-column:1/-1">Availability could not be loaded. Please try again.</div>';
+        setBookingMessage(error.message || 'Availability could not be loaded.', 'error');
+      }
+    }
+
+    function renderAvailableBookingSlots() {
+      const starts = appointmentCandidates(selectedBookingDate, selectedServiceDuration);
+      bookingSlotsGrid.innerHTML = '';
+
+      if (!starts.length) {
+        bookingSlotsGrid.innerHTML = '<div class="booking-empty" style="grid-column:1/-1">No appointments are available for this date.</div>';
+        return;
+      }
+
+      starts.forEach((start) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'booking-slot';
+        button.textContent = `${formatClock(start)} – ${formatClock(start + selectedServiceDuration)}`;
+        button.addEventListener('click', () => {
+          selectedBookingStart = start;
+          document.querySelectorAll('.booking-slot').forEach((slot) => slot.classList.remove('selected'));
+          button.classList.add('selected');
+          bookingSubmit.disabled = false;
+          setBookingMessage('');
+        });
+        bookingSlotsGrid.appendChild(button);
+      });
+    }
+
+    bookingCategory.addEventListener('change', () => {
+      bookingService.innerHTML = '<option value="">Select a service</option>';
+      selectedServiceDuration = null;
+      updateDatePickerVisibility();
+      clearBookingSelection();
+
+      const services = SERVICE_CATALOG[bookingCategory.value] || [];
+      services.forEach((service) => {
+        const option = document.createElement('option');
+        option.value = service.name;
+        option.dataset.duration = service.duration;
+        option.textContent = `${service.name} — ${service.duration} min`;
+        bookingService.appendChild(option);
+      });
+      bookingService.disabled = services.length === 0;
+    });
+
+    bookingService.addEventListener('change', () => {
+      const selectedOption = bookingService.options[bookingService.selectedIndex];
+      selectedServiceDuration = Number(selectedOption?.dataset.duration) || null;
+      updateDatePickerVisibility();
+      clearBookingSelection();
+    });
+
+    bookingDate.addEventListener('change', () => {
+      const date = dateFromInputValue(bookingDate.value);
+      if (date) selectBookingDate(date);
+    });
+
+    bookingForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const fullName = bookingName.value.trim();
+      const cell = bookingCell.value.trim();
+      const cellDigits = cell.replace(/\D/g, '');
+
+      if (!fullName || cellDigits.length < 10 || !bookingCategory.value || !bookingService.value ||
+          !selectedBookingDate || selectedBookingStart === null) {
+        setBookingMessage('Please complete your name, cell, service, date and time.', 'error');
+        return;
+      }
+
+      bookingSubmit.disabled = true;
+      bookingSubmit.textContent = 'RESERVING…';
+      setBookingMessage('Saving your booking request…');
+
+      const dateKey = dateKeyFromDate(selectedBookingDate);
+      const occupiedMinutes = occupiedBlocks(selectedBookingStart, selectedServiceDuration);
+      const payload = {
+        fullName,
+        cell,
+        category: bookingCategory.value,
+        service: bookingService.value,
+        durationMinutes: selectedServiceDuration,
+        date: dateKey,
+        startMinutes: selectedBookingStart,
+        endMinutes: selectedBookingStart + selectedServiceDuration,
+        timeZone: BUSINESS_TIME_ZONE
+      };
+
+      try {
+        const api = await waitForBookingApi();
+        const bookingId = await api.reserve(payload, occupiedMinutes);
+        setBookingMessage(`Booking request received. Reference: ${bookingId.slice(0, 8).toUpperCase()}`, 'success');
+        showToast('Your booking request has been received.');
+        currentlyBookedMinutes = new Set([...currentlyBookedMinutes, ...occupiedMinutes]);
+        selectedBookingStart = null;
+        renderAvailableBookingSlots();
+      } catch (error) {
+        if (error.code === 'booking/conflict') {
+          setBookingMessage(error.message, 'error');
+          await selectBookingDate(selectedBookingDate);
+        } else if (error.code === 'auth/operation-not-allowed') {
+          setBookingMessage('Booking setup is not complete yet. Anonymous Firebase sign-in must be enabled.', 'error');
+        } else {
+          setBookingMessage(error.message || 'Your request could not be saved. Please try again.', 'error');
+        }
+      } finally {
+        bookingSubmit.textContent = 'SUBMIT BOOKING REQUEST';
+        bookingSubmit.disabled = selectedBookingStart === null;
+      }
+    });
+
+    bookingDate.min = dateKeyFromDate(new Date());
+    updateDatePickerVisibility();
+
+    document.querySelectorAll('[aria-label^="Book "]:not([aria-label="Book Now"])').forEach((button) => {
+      const artwork = button.closest('.artwork-canvas');
+      let category = '';
+      if (artwork?.classList.contains('bridal-artwork')) category = 'Bridal Makeup';
+      if (artwork?.classList.contains('hair-artwork')) category = 'Hair Styling';
+      if (artwork?.classList.contains('nails-artwork')) category = 'Nails';
+      const serviceName = button.getAttribute('aria-label').replace(/^Book\s+/, '');
+      button.onclick = () => openBooking(category, serviceName);
+    });
 
     const whatsappUrl = 'https://wa.me/16147078179?text=Hello%20Haritha%2C%20I%20would%20like%20to%20book%20an%20appointment.';
     const whatsappIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAdCAYAAABSZrcyAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOtSURBVEhLxZddTBxVGIafMzs7w678LHQLlrZG2BjERmitYq1oTWOMQDU0UWN6U42/aXqhXvSC9MLExkQvvCrqjWnqjUnTFBRsqiHGVpT+xIZCa0WprbLR8ld2YV3Y2Z1zvAA3zNRluOjiczGZnMy87znf+eb7zojBEVvxP6G5B5zMzytfs/MwF4uutx6Heb5WmIusucrjCnORNV9pY9xhX2nEcj41pRRCzMfmp5krdI+f4uzUBZJ6CgQEMyZbQnW0rH6M2qLqm97JhRgcyajlBD1lWxz6q5PO+En8ScHmkhoqzdWAIGqN0R+7jF0geDr0KLvXtFKgm26Jm/BcuVSStJ3mwNWPOS9+o8V4mOcqniBshhzPTVgxjo320DXXSz0R9le/iqH50UTunRUDI7byWnf7tc84njnD3uJnaCpvzI5LJQEQQiAWondi7AcOTh+lWb+fPXfuyj77X2hexkOJ3/ky8T3NegNN5Y2cmPiOtpF2YulpNKExbytQKKSSPFm+lR36g3Qnevl55qpbzkHumCzwxfUeArbB7nWt/G3PcvhaBwPpYbpGvwVALZSmxZPYVdlCQcbg89FvXGpOPM374gNsCFRRqAdJZmaxZBqVSDMlpx0Znb1XUGwUUheMcDZ+wS3nwNN8zm+x1iwHIGyUsqnsHjAE20MNCCGwlQ0L+y6Vykai0ign6U87tNx4moNw1PyX1z9LsbyND6NHmEzF0IVORtlMWjE0IRZl978pmBtP80DGz5/pcQAUktvNMPsqXyBqj/PmlffpvfEjh6Kd7P3lHT6JdpDIJAGIpq8TSBsuNSee5ltK6rmYGGbCiqEJH7a02RS6m/eq3sDUgrw7+SkdsR5iIsnRia+Zs1Mk7VkGk8M8EKpzyznwNG8KN2LpNn03ziNR2EikktQWVnHwrn28VfY8W4Mb2Ry8l7Y7XiFslnI42oXlk+ys2O6Wc6AtWd6AhJwDZVMZqEBDZKuWVBJD8/P4qofYH3mNA1V7eKTsPr4aPcVxq4/mwkZqCqvccg48i8yl6SGwoMRXxLn4JbrHTjJpTc0XmEWNYzIV46M/jtA+c4w6Uc1L63dmK2AuPBtL29AH9M/+CpYC0wd+hZ4UbAzVsM5fAcCINUp//DLS1HiqdBsvrmnF9C2dbCynsbx+8W1WFZQR8a+ltqiagB6gZ/w0p+P9JHwpNAGBjEFDaT07wtvYUBSB5bfUpc3ziWe25xPHAXKlcRwgV3oCjrAvnR63Ho89z+/v0j/z/2Qx4ex7jgAAAABJRU5ErkJggg==';
@@ -1239,7 +2003,7 @@
       if (index >= totalSlides) index = 0;
 
       currentSlide = index;
-      slides.style.transform = `translateX(-${currentSlide * 20}%)`;
+      slides.style.transform = `translateX(-${currentSlide * (100 / totalSlides)}%)`;
 
       if (window.matchMedia('(max-width: 760px)').matches) {
         slider.scrollTo({ top: 0, behavior: 'auto' });
@@ -1279,7 +2043,7 @@
 
     function bookFromMenu() {
       closeMobileMenu();
-      showToast('Booking request selected');
+      goToSlide(5);
     }
 
     function showToast(message) {
