@@ -633,6 +633,7 @@
     }
 
     .booking-control,
+    .booking-custom-select,
     .booking-date-picker-ui,
     .booking-slots-ui,
     .booking-submit {
@@ -688,6 +689,10 @@
     .booking-service option:checked {
       background: linear-gradient(#e6c58e, #e6c58e);
       color: #35271f;
+    }
+
+    .booking-custom-select {
+      display: none;
     }
 
     .booking-name { top: 36.05%; }
@@ -1052,13 +1057,121 @@
 
       .booking-category,
       .booking-service {
-        font-size: clamp(13px, 3.25vw, 17px);
-        font-weight: 600;
+        display: none;
       }
 
-      .booking-category option,
-      .booking-service option {
-        font-size: 15px;
+      .booking-custom-select {
+        position: absolute;
+        left: 8.55%;
+        z-index: 80;
+        display: block;
+        width: 82.75%;
+        height: 2.86%;
+        pointer-events: auto;
+        font-family: Georgia, "Times New Roman", serif;
+      }
+
+      .booking-category-custom { top: 38.75%; }
+      .booking-service-custom { top: 44.15%; }
+
+      .booking-custom-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+        padding: 0 4.2%;
+        border: 1px solid rgba(201, 164, 111, .78);
+        border-radius: 8px;
+        outline: none;
+        background: rgba(255, 252, 248, .98);
+        color: #49382d;
+        font: 600 clamp(13px, 3.25vw, 17px)/1.2 Georgia, "Times New Roman", serif;
+        letter-spacing: .015em;
+        text-align: left;
+        cursor: pointer;
+        box-shadow: inset 0 1px 2px rgba(91, 68, 47, .04);
+      }
+
+      .booking-custom-trigger:focus-visible,
+      .booking-custom-trigger[aria-expanded="true"] {
+        border-color: #a87942;
+        box-shadow: 0 0 0 3px rgba(201, 164, 111, .20);
+      }
+
+      .booking-custom-trigger:disabled {
+        color: #9a8d83;
+        cursor: not-allowed;
+        opacity: .72;
+      }
+
+      .booking-custom-arrow {
+        width: 9px;
+        height: 9px;
+        flex: 0 0 auto;
+        margin-left: 12px;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: translateY(-2px) rotate(45deg);
+        transition: transform .18s ease;
+      }
+
+      .booking-custom-trigger[aria-expanded="true"] .booking-custom-arrow {
+        transform: translateY(2px) rotate(225deg);
+      }
+
+      .booking-custom-options {
+        position: absolute;
+        top: calc(100% + 5px);
+        left: 0;
+        z-index: 90;
+        width: 100%;
+        max-height: min(42dvh, 330px);
+        padding: 5px;
+        overflow-y: auto;
+        border: 1px solid rgba(169, 121, 67, .72);
+        border-radius: 10px;
+        background: #fffaf6;
+        box-shadow: 0 12px 28px rgba(70, 48, 32, .22);
+        scrollbar-width: thin;
+        scrollbar-color: #c9a46f transparent;
+      }
+
+      .booking-custom-options[hidden] {
+        display: none !important;
+      }
+
+      .booking-custom-option {
+        display: block;
+        width: 100%;
+        min-height: 40px;
+        padding: 8px 12px;
+        border: 0;
+        border-radius: 7px;
+        background: transparent;
+        color: #49382d;
+        font: 500 clamp(13px, 3.2vw, 16px)/1.25 Georgia, "Times New Roman", serif;
+        letter-spacing: .01em;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .booking-custom-option:hover,
+      .booking-custom-option:focus-visible {
+        outline: none;
+        background: #f3dfbd;
+        color: #3a291f;
+      }
+
+      .booking-custom-option.selected {
+        background: linear-gradient(135deg, #e8ca95, #d7a65e);
+        color: #33241b;
+        font-weight: 700;
+      }
+
+      .booking-custom-option.placeholder {
+        color: #8a7768;
+        font-style: italic;
       }
 
       .booking-date-picker-ui {
@@ -1409,11 +1522,25 @@
             <select class="booking-control booking-category" id="bookingCategory" name="category" required aria-label="Service Category">
               <option value="">Select a category</option>
             </select>
+            <div class="booking-custom-select booking-category-custom" id="bookingCategoryCustom">
+              <button class="booking-custom-trigger" id="bookingCategoryTrigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span id="bookingCategoryText">Select a category</span>
+                <span class="booking-custom-arrow" aria-hidden="true"></span>
+              </button>
+              <div class="booking-custom-options" id="bookingCategoryOptions" role="listbox" hidden></div>
+            </div>
 
             <label class="sr-only" for="bookingService">Select Service</label>
             <select class="booking-control booking-service" id="bookingService" name="service" required disabled aria-label="Select Service">
               <option value="">Select a service</option>
             </select>
+            <div class="booking-custom-select booking-service-custom" id="bookingServiceCustom">
+              <button class="booking-custom-trigger" id="bookingServiceTrigger" type="button" aria-haspopup="listbox" aria-expanded="false" disabled>
+                <span id="bookingServiceText">Select a service</span>
+                <span class="booking-custom-arrow" aria-hidden="true"></span>
+              </button>
+              <div class="booking-custom-options" id="bookingServiceOptions" role="listbox" hidden></div>
+            </div>
 
             <section class="booking-date-picker-ui" id="bookingDatePicker" aria-label="Choose appointment date" hidden>
               <label class="booking-date-label" for="bookingDate">Appointment Date</label>
@@ -1635,6 +1762,14 @@
     const bookingCell = document.getElementById('bookingCell');
     const bookingCategory = document.getElementById('bookingCategory');
     const bookingService = document.getElementById('bookingService');
+    const bookingCategoryCustom = document.getElementById('bookingCategoryCustom');
+    const bookingCategoryTrigger = document.getElementById('bookingCategoryTrigger');
+    const bookingCategoryText = document.getElementById('bookingCategoryText');
+    const bookingCategoryOptions = document.getElementById('bookingCategoryOptions');
+    const bookingServiceCustom = document.getElementById('bookingServiceCustom');
+    const bookingServiceTrigger = document.getElementById('bookingServiceTrigger');
+    const bookingServiceText = document.getElementById('bookingServiceText');
+    const bookingServiceOptions = document.getElementById('bookingServiceOptions');
     const bookingDatePicker = document.getElementById('bookingDatePicker');
     const bookingDate = document.getElementById('bookingDate');
     const bookingSlots = document.getElementById('bookingSlots');
@@ -1732,6 +1867,66 @@
       option.value = category;
       option.textContent = category;
       bookingCategory.appendChild(option);
+    });
+
+    const bookingDropdowns = [
+      { select: bookingCategory, wrapper: bookingCategoryCustom, trigger: bookingCategoryTrigger, text: bookingCategoryText, options: bookingCategoryOptions },
+      { select: bookingService, wrapper: bookingServiceCustom, trigger: bookingServiceTrigger, text: bookingServiceText, options: bookingServiceOptions }
+    ];
+
+    function closeBookingDropdowns(except = null) {
+      bookingDropdowns.forEach((dropdown) => {
+        if (dropdown === except) return;
+        dropdown.options.hidden = true;
+        dropdown.trigger.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    function renderBookingDropdown(dropdown) {
+      const selectedOption = dropdown.select.options[dropdown.select.selectedIndex] || dropdown.select.options[0];
+      dropdown.text.textContent = selectedOption?.textContent || '';
+      dropdown.trigger.disabled = dropdown.select.disabled;
+      dropdown.options.innerHTML = '';
+
+      [...dropdown.select.options].forEach((option) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'booking-custom-option';
+        if (!option.value) button.classList.add('placeholder');
+        if (option.selected) button.classList.add('selected');
+        button.textContent = option.textContent;
+        button.setAttribute('role', 'option');
+        button.setAttribute('aria-selected', option.selected ? 'true' : 'false');
+        button.addEventListener('click', (event) => {
+          event.stopPropagation();
+          dropdown.select.value = option.value;
+          dropdown.select.dispatchEvent(new Event('change', { bubbles: true }));
+          closeBookingDropdowns();
+          syncBookingDropdowns();
+        });
+        dropdown.options.appendChild(button);
+      });
+    }
+
+    function syncBookingDropdowns() {
+      bookingDropdowns.forEach(renderBookingDropdown);
+    }
+
+    bookingDropdowns.forEach((dropdown) => {
+      dropdown.wrapper.addEventListener('click', (event) => event.stopPropagation());
+      dropdown.trigger.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (dropdown.trigger.disabled) return;
+        const shouldOpen = dropdown.options.hidden;
+        closeBookingDropdowns();
+        dropdown.options.hidden = !shouldOpen;
+        dropdown.trigger.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+      });
+    });
+
+    document.addEventListener('click', () => closeBookingDropdowns());
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeBookingDropdowns();
     });
 
     function setBookingMessage(message, type = '') {
@@ -1938,6 +2133,7 @@
         bookingService.appendChild(option);
       });
       bookingService.disabled = services.length === 0;
+      syncBookingDropdowns();
     });
 
     bookingService.addEventListener('change', () => {
@@ -1945,6 +2141,7 @@
       selectedServiceDuration = Number(selectedOption?.dataset.duration) || null;
       updateDatePickerVisibility();
       clearBookingSelection();
+      syncBookingDropdowns();
     });
 
     bookingDate.addEventListener('change', () => {
@@ -2015,6 +2212,7 @@
 
     bookingDate.min = getBusinessNow().dateKey;
     updateDatePickerVisibility();
+    syncBookingDropdowns();
 
     document.querySelectorAll('[aria-label^="Book "]:not([aria-label="Book Now"])').forEach((button) => {
       const artwork = button.closest('.artwork-canvas');
