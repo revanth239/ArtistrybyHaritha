@@ -117,6 +117,31 @@
       display: none;
     }
 
+    .promotion-flash {
+      position: absolute;
+      z-index: 35;
+      top: 11.2%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      max-width: 72%;
+      padding: clamp(8px, .8vw, 13px) clamp(16px, 2vw, 30px);
+      border: 1px solid rgba(183, 126, 62, .8);
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,250,244,.97), rgba(240,207,164,.97));
+      color: #54371f;
+      box-shadow: 0 8px 24px rgba(81, 54, 31, .24);
+      font-weight: 800;
+      font-size: clamp(11px, 1.15vw, 18px);
+      text-align: center;
+      animation: promotionPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes promotionPulse {
+      0%,100% { box-shadow: 0 7px 20px rgba(81,54,31,.18), 0 0 0 0 rgba(201,148,80,.28); }
+      50% { box-shadow: 0 9px 27px rgba(81,54,31,.30), 0 0 0 8px rgba(201,148,80,0); }
+    }
+
     /* =========================================================
        INVISIBLE HOTSPOTS
     ========================================================= */
@@ -1016,6 +1041,13 @@
         display: flex;
       }
 
+      .promotion-flash {
+        top: 8.4%;
+        max-width: 88%;
+        padding: 7px 13px;
+        font-size: clamp(10px, 2.8vw, 15px);
+      }
+
       .popup-grid {
         grid-template-columns: 1fr;
       }
@@ -1759,7 +1791,22 @@
       }
     };
 
+    window.promotionApi = {
+      async getActivePromotions(dateKey) {
+        await ensureAnonymousUser();
+        const snapshot = await getDocs(collection(bookingDb, "promotions"));
+        return snapshot.docs
+          .map((promotionDocument) => ({ id: promotionDocument.id, ...promotionDocument.data() }))
+          .filter((promotion) =>
+            promotion.status === "active" &&
+            promotion.startDate <= dateKey &&
+            promotion.endDate >= dateKey
+          );
+      }
+    };
+
     window.dispatchEvent(new Event("booking-api-ready"));
+    window.dispatchEvent(new Event("promotion-api-ready"));
   </script>
 
   <script>
@@ -2287,6 +2334,45 @@
           ${whatsappIconMarkup}
         </a>`);
     });
+
+    function easternDateKey() {
+      const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: BUSINESS_TIME_ZONE,
+        year: 'numeric', month: '2-digit', day: '2-digit'
+      }).formatToParts(new Date());
+      const value = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+      return `${value.year}-${value.month}-${value.day}`;
+    }
+
+    let promotionTimer = null;
+    async function showActivePromotion() {
+      if (!window.promotionApi) return;
+      try {
+        const promotions = await window.promotionApi.getActivePromotions(easternDateKey());
+        const home = document.querySelector('.home-artwork');
+        home.querySelectorAll('.promotion-flash').forEach((item) => item.remove());
+        if (!promotions.length) return;
+        const sortedPromotions = promotions.sort((a, b) => Number(b.discountPercent) - Number(a.discountPercent));
+        const banner = document.createElement('div');
+        banner.className = 'promotion-flash';
+        banner.setAttribute('role', 'status');
+        home.appendChild(banner);
+        let promotionIndex = 0;
+        const displayPromotion = () => {
+          const promotion = sortedPromotions[promotionIndex % sortedPromotions.length];
+          banner.textContent = `${promotion.discountPercent}% OFF ${promotion.service} · Limited-time promotion`;
+          promotionIndex += 1;
+        };
+        displayPromotion();
+        clearInterval(promotionTimer);
+        if (sortedPromotions.length > 1) promotionTimer = setInterval(displayPromotion, 4200);
+      } catch (error) {
+        console.warn('Promotion could not be loaded.', error);
+      }
+    }
+
+    if (window.promotionApi) showActivePromotion();
+    else window.addEventListener('promotion-api-ready', showActivePromotion, { once: true });
 
     /* The Follow Us labels are printed inside each image. These precise
        hotspots restore both the hover effect and the actual social links. */
