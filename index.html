@@ -318,22 +318,29 @@
     .footer-column:nth-child(3) { justify-self: end; }
     .footer-column:nth-child(3) .contact-detail { white-space: nowrap; }
 
-    .gallery-canvas { background: #fbf2ea; padding: 7.3% 11% 22%; }
-    .gallery-canvas::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 7% 38%,rgba(244,210,174,.52),transparent 18%),radial-gradient(circle at 90% 50%,rgba(250,226,208,.68),transparent 24%); pointer-events:none; }
-    .gallery-content { position:relative; z-index:1; height:100%; padding:2.5% 3.5%; border:1px solid #e4b87d; border-radius:17px; background:rgba(255,252,248,.58); box-shadow:0 8px 18px rgba(102,72,48,.08); }
-    .gallery-title { font:italic 3vw Georgia,serif; text-align:center; margin:0 0 .6%; }
-    .gallery-subtitle { text-align:center; margin:0 0 2%; font-size:1.05vw; color:#65584e; }
-    .gallery-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5%; }
-    .gallery-card { margin:0; padding:5%; border:1px solid #ecc790; border-radius:12px; background:#fffaf6; box-shadow:0 4px 10px rgba(83,59,42,.1); overflow:hidden; transition:.25s ease; }
-    .gallery-card img { width:100%; height:11.6vw; display:block; object-fit:cover; border-radius:8px; }
-    .gallery-card figcaption { padding-top:6%; font:italic 1.05vw Georgia,serif; text-align:center; }
-    .gallery-card:hover { transform:translateY(-5px) scale(1.015); box-shadow:0 12px 22px rgba(137,92,47,.22),0 0 0 2px rgba(225,174,96,.35); }
-    .gallery-header { position:absolute; z-index:2; top:0; left:0; width:100%; height:9.8%; display:flex; align-items:center; padding:0 4.5%; color:#fff; background:linear-gradient(100deg,#5b4b3f,#786656,#51453b); }
-    .gallery-brand { display:flex; align-items:center; gap:1.1vw; font:1.45vw Georgia,serif; }
-    .gallery-brand img { width:5vw; height:5vw; object-fit:cover; border-radius:50%; }
-    .gallery-nav { display:flex; gap:4.7vw; margin-left:auto; align-items:center; font-size:1.15vw; }
-    .gallery-nav button, .gallery-nav a { color:#fff; font:inherit; text-decoration:none; background:transparent; border:0; cursor:pointer; }
-    .gallery-nav .book-gallery { border:1px solid #d4b181; border-radius:7px; padding:.65vw 1.3vw; }
+    .gallery-artwork { width:100vw; height:100vh; aspect-ratio:auto; overflow-y:auto; background:radial-gradient(circle at 85% 12%,#fff 0,transparent 28%),linear-gradient(135deg,#f7eee6,#fffaf6 52%,#f4e8dd); }
+    .gallery-page-header { min-height:92px; position:sticky; top:0; z-index:20; display:flex; align-items:center; padding:0 clamp(22px,5vw,72px); color:#fff; background:linear-gradient(90deg,#4b4139,#62564b); box-shadow:0 3px 18px #0002; }
+    .gallery-logo { width:68px; height:68px; border-radius:50%; overflow:hidden; position:relative; flex:0 0 auto; }
+    .gallery-logo img { position:absolute; width:927px; max-width:none; height:auto; left:-22px; top:-2px; }
+    .gallery-brand { margin-left:17px; font:clamp(22px,2.2vw,34px) Georgia,serif; white-space:nowrap; }
+    .gallery-nav { display:flex; align-items:center; gap:clamp(18px,4vw,64px); margin-left:auto; }
+    .gallery-nav button { border:0; color:#fff7ee; background:transparent; cursor:pointer; font:inherit; }
+    .gallery-nav .book-gallery { border:1px solid #d7b17d; border-radius:8px; padding:11px 20px; }
+    .gallery-main { width:min(1180px,calc(100% - 34px)); margin:30px auto; padding:28px; position:relative; border:1px solid #cf9450; border-radius:25px; background:#fff9f3dd; box-shadow:0 14px 45px rgba(81,70,61,.14); }
+    .gallery-main::before { content:'✦'; position:absolute; top:-17px; left:50%; transform:translateX(-50%); padding:0 16px; color:#cf9450; background:#fbf5ef; font-size:28px; }
+    .gallery-title { margin:8px 0 5px; text-align:center; font:italic clamp(34px,4vw,55px) Georgia,serif; }
+    .gallery-subtitle { margin:0 0 24px; text-align:center; color:#665b52; }
+    .gallery-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+    .gallery-card { margin:0; padding:12px; overflow:hidden; border:1px solid #dfbb91; border-radius:15px; background:#fff; box-shadow:0 5px 17px #6b4e3120; transition:transform .25s ease,box-shadow .25s ease; }
+    .gallery-card img { width:100%; aspect-ratio:4/5; display:block; object-fit:fill; border-radius:10px; }
+    .gallery-card:hover { transform:translateY(-5px); box-shadow:0 12px 25px rgba(107,78,49,.2); }
+    .gallery-loading,.gallery-error { grid-column:1/-1; padding:28px; text-align:center; color:#6b5f56; }
+    .gallery-error { color:#a44a43; }
+    .gallery-page-footer { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; padding:34px max(6vw,24px) 18px; color:#574c43; background:#f3e8dd; border-top:1px solid #d5b78f; }
+    .gallery-page-footer h3 { margin:0 0 12px; color:#6d4b30; font:italic 20px Georgia,serif; }
+    .gallery-page-footer p,.gallery-page-footer a,.gallery-page-footer span { display:block; margin:6px 0; color:#665b52; text-decoration:none; line-height:1.5; }
+    .gallery-page-footer a:hover { color:#a66d34; }
+    .gallery-page-footer .footer-copyright { grid-column:1/-1; }
 
     /* =========================================================
        COMMON HEADER HOTSPOTS
@@ -1280,6 +1287,22 @@
         width: 82%;
         font-size: clamp(10px, 2.8vw, 16px);
       }
+
+      .gallery-artwork { width:100vw; height:100dvh; aspect-ratio:auto; }
+      .gallery-page-header { min-height:72px; padding:8px 14px; }
+      .gallery-logo { width:54px; height:54px; }
+      .gallery-logo img { width:736px; left:-17px; top:-2px; }
+      .gallery-brand { margin-left:12px; font-size:21px; }
+      .gallery-nav { gap:8px; margin-left:auto; }
+      .gallery-nav button:not(.book-gallery) { display:none; }
+      .gallery-nav .book-gallery { padding:9px 11px; font-size:12px; }
+      .gallery-main { width:calc(100% - 20px); margin:18px auto; padding:20px 12px; border-radius:20px; }
+      .gallery-title { font-size:36px; }
+      .gallery-grid { grid-template-columns:1fr; gap:14px; }
+      .gallery-card { padding:10px; }
+      .gallery-card img { aspect-ratio:4/5; max-height:none; }
+      .gallery-page-footer { grid-template-columns:1fr; gap:18px; padding:28px 24px 18px; }
+      .gallery-page-footer .footer-copyright { grid-column:1; }
     }
 
   </style>
@@ -1516,29 +1539,33 @@
       ====================================================== -->
       <section class="slide">
         <div class="artwork-canvas gallery-artwork">
-          <img class="desktop-art" src="gallery.png" alt="Artistry by Haritha gallery" />
-          <img class="mobile-art" src="mobile-gallery.png?v=2" alt="Artistry by Haritha mobile gallery" />
-          <button class="hotspot nav-home button-hover" onclick="goToSlide(0)" aria-label="Home"></button>
-          <button class="hotspot nav-services button-hover open-services-popup" aria-label="Services"></button>
-          <button class="hotspot nav-gallery button-hover" aria-label="Gallery"></button>
-          <button class="hotspot nav-book button-hover" onclick="goToSlide(5)" aria-label="Book Now"></button>
-          <button class="hotspot sub-left circle-hover" onclick="previousSlide()" aria-label="Previous slide"></button>
-          <button class="hotspot sub-right circle-hover" onclick="nextSlide()" aria-label="Next slide"></button>
-
-          <!-- Mobile Gallery controls -->
-          <button class="hotspot mobile-hotspot" style="left:87.3%;top:2.2%;width:10%;height:4.8%" onclick="openMobileMenu()" aria-label="Open menu"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:6.3%;top:10.9%;width:17.8%;height:3.1%" onclick="goToSlide(0)" aria-label="Back Home"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:40.1%;width:17.6%;height:3.2%" onclick="showToast('Traditional Elegance selected')" aria-label="View Traditional Elegance"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:40.1%;width:17.6%;height:3.2%" onclick="showToast('Bridal Grace selected')" aria-label="View Bridal Grace"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:61.7%;width:17.6%;height:3.2%" onclick="showToast('Celebration Glam selected')" aria-label="View Celebration Glam"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:61.7%;width:17.6%;height:3.2%" onclick="showToast('Soft Glam selected')" aria-label="View Soft Glam"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:26.2%;top:84%;width:17.6%;height:3.2%" onclick="showToast('Radiant Beauty selected')" aria-label="View Radiant Beauty"></button>
-          <button class="hotspot mobile-hotspot button-hover" style="left:73.5%;top:84%;width:17.6%;height:3.2%" onclick="showToast('Festive Moments selected')" aria-label="View Festive Moments"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:48.4%;top:89.6%;width:3.2%;height:2%" onclick="goToSlide(0)" aria-label="Home slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:55.2%;top:89.6%;width:3.2%;height:2%" onclick="goToSlide(1)" aria-label="Bridal slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:61.9%;top:89.6%;width:3.2%;height:2%" onclick="goToSlide(2)" aria-label="Hair slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:68.7%;top:89.6%;width:3.2%;height:2%" onclick="goToSlide(3)" aria-label="Nails slide"></button>
-          <button class="hotspot mobile-hotspot circle-hover" style="left:75.4%;top:89.6%;width:3.2%;height:2%" onclick="goToSlide(4)" aria-label="Gallery slide"></button>
+          <header class="gallery-page-header">
+            <div class="gallery-logo"><img src="artistry-design.png" alt=""></div>
+            <div class="gallery-brand">Artistry by Haritha</div>
+            <nav class="gallery-nav" aria-label="Gallery navigation">
+              <button onclick="goToSlide(0)">Home</button>
+              <button class="open-services-popup">Services</button>
+              <button aria-current="page">Gallery</button>
+              <button class="book-gallery" onclick="goToSlide(5)">Book Now</button>
+            </nav>
+          </header>
+          <main class="gallery-main">
+            <h1 class="gallery-title">Our Gallery</h1>
+            <p class="gallery-subtitle">A collection of beautiful moments and transformations by Artistry by Haritha.</p>
+            <section id="galleryGrid" class="gallery-grid" aria-live="polite">
+              <figure class="gallery-card"><img src="gallery-01.jpeg" alt="Traditional saree makeup and styling" loading="lazy"></figure>
+              <figure class="gallery-card"><img src="gallery-02.jpeg" alt="Special occasion hair and makeup" loading="lazy"></figure>
+              <figure class="gallery-card"><img src="gallery-03.jpeg" alt="Birthday celebration hair and makeup" loading="lazy"></figure>
+              <figure class="gallery-card"><img src="gallery-04.jpeg" alt="Traditional event makeup and styling" loading="lazy"></figure>
+              <div id="dynamicGalleryStatus" class="gallery-loading">Loading more gallery images…</div>
+            </section>
+          </main>
+          <footer class="gallery-page-footer">
+            <section><h3>About Us</h3><p>Artistry by Haritha is a premier makeup and beauty studio specializing in bridal makeup, hairstyles, and nail services for every special occasion.</p></section>
+            <section><h3>Follow Us</h3><a href="https://wa.me/16147078179" target="_blank" rel="noopener">WhatsApp · 614 707 8179</a><a href="https://www.instagram.com/haritha_makeup_hairstyle" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/search/top?q=haritha%20reddy" target="_blank" rel="noopener">Facebook</a></section>
+            <section><h3>Contact Us</h3><a href="tel:+16147078179">614 707 8179</a><a href="mailto:Beautycare.ohio@gmail.com">Beautycare.ohio@gmail.com</a><span>Dublin, Ohio, 43016</span></section>
+            <div class="footer-copyright">© 2026 Artistry by Haritha. All rights reserved.</div>
+          </footer>
         </div>
       </section>
 
@@ -1806,8 +1833,20 @@
       }
     };
 
+    window.galleryApi = {
+      async getImages() {
+        await ensureAnonymousUser();
+        const snapshot = await getDocs(collection(bookingDb, "galleryImages"));
+        return snapshot.docs
+          .map((imageDocument) => ({ id: imageDocument.id, ...imageDocument.data() }))
+          .filter((image) => image.imageUrl && image.status !== "hidden")
+          .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      }
+    };
+
     window.dispatchEvent(new Event("booking-api-ready"));
     window.dispatchEvent(new Event("promotion-api-ready"));
+    window.dispatchEvent(new Event("gallery-api-ready"));
   </script>
 
   <script>
@@ -2326,7 +2365,7 @@
       </a>`);
 
     /* Keep WhatsApp and Instagram one tap away on every mobile slide after Home. */
-    document.querySelectorAll('.artwork-canvas:not(.home-artwork)').forEach((canvas) => {
+    document.querySelectorAll('.artwork-canvas:not(.home-artwork):not(.gallery-artwork)').forEach((canvas) => {
       canvas.insertAdjacentHTML('beforeend', `
         <a class="mobile-instagram-slide" href="${instagramUrl}" target="_blank" rel="noopener" aria-label="Open Artistry by Haritha on Instagram">
           ${instagramIconMarkup}
@@ -2375,9 +2414,47 @@
     if (window.promotionApi) showActivePromotion();
     else window.addEventListener('promotion-api-ready', showActivePromotion, { once: true });
 
+    function safeImageUrl(value) {
+      try {
+        const url = new URL(value, window.location.href);
+        return ['https:', 'http:'].includes(url.protocol) ? url.href : '';
+      } catch (_) { return ''; }
+    }
+
+    async function loadDynamicGallery() {
+      if (!window.galleryApi) return;
+      const grid = document.getElementById('galleryGrid');
+      const status = document.getElementById('dynamicGalleryStatus');
+      try {
+        const images = await window.galleryApi.getImages();
+        status?.remove();
+        images.forEach((item) => {
+          const source = safeImageUrl(item.imageUrl);
+          if (!source) return;
+          const card = document.createElement('figure');
+          card.className = 'gallery-card';
+          const image = document.createElement('img');
+          image.src = source;
+          image.alt = item.altText || item.title || 'Artistry by Haritha gallery image';
+          image.loading = 'lazy';
+          card.append(image);
+          grid.append(card);
+        });
+      } catch (error) {
+        if (status) {
+          status.className = 'gallery-error';
+          status.textContent = 'Additional gallery images could not be loaded right now.';
+        }
+        console.warn('Gallery could not be loaded.', error);
+      }
+    }
+
+    if (window.galleryApi) loadDynamicGallery();
+    else window.addEventListener('gallery-api-ready', loadDynamicGallery, { once: true });
+
     /* The Follow Us labels are printed inside each image. These precise
        hotspots restore both the hover effect and the actual social links. */
-    document.querySelectorAll('.artwork-canvas').forEach((canvas) => {
+    document.querySelectorAll('.artwork-canvas:not(.gallery-artwork)').forEach((canvas) => {
       canvas.insertAdjacentHTML('beforeend', `
         <a class="hotspot soft-hover footer-whatsapp" href="https://wa.me/16147078179" target="_blank" rel="noopener" aria-label="WhatsApp 614 707 8179"></a>
         <a class="hotspot soft-hover footer-instagram" href="https://www.instagram.com/haritha_makeup_hairstyle" target="_blank" rel="noopener" aria-label="Instagram"></a>
